@@ -1,0 +1,180 @@
+{
+  "summary": [
+    {
+      "form": "EX00",
+      "missing_instances": 0,
+      "warnings": 0,
+      "assigned_unique": 135,
+      "total": 135
+    },
+    {
+      "form": "EX01",
+      "missing_instances": 0,
+      "warnings": 12,
+      "assigned_unique": 96,
+      "total": 96
+    },
+    {
+      "form": "EX02",
+      "missing_instances": 0,
+      "warnings": 19,
+      "assigned_unique": 129,
+      "total": 129
+    },
+    {
+      "form": "EX03",
+      "missing_instances": 0,
+      "warnings": 0,
+      "assigned_unique": 123,
+      "total": 123
+    },
+    {
+      "form": "EX04",
+      "missing_instances": 0,
+      "warnings": 2,
+      "assigned_unique": 96,
+      "total": 96
+    },
+    {
+      "form": "EX06",
+      "missing_instances": 0,
+      "warnings": 2,
+      "assigned_unique": 88,
+      "total": 88
+    },
+    {
+      "form": "EX07",
+      "missing_instances": 0,
+      "warnings": 3,
+      "assigned_unique": 92,
+      "total": 92
+    },
+    {
+      "form": "EX09",
+      "missing_instances": 0,
+      "warnings": 7,
+      "assigned_unique": 86,
+      "total": 86
+    },
+    {
+      "form": "EX10",
+      "missing_instances": 0,
+      "warnings": 9,
+      "assigned_unique": 157,
+      "total": 157
+    },
+    {
+      "form": "EX11",
+      "missing_instances": 0,
+      "warnings": 0,
+      "assigned_unique": 84,
+      "total": 84
+    },
+    {
+      "form": "EX13",
+      "missing_instances": 0,
+      "warnings": 0,
+      "assigned_unique": 75,
+      "total": 75
+    },
+    {
+      "form": "EX16",
+      "missing_instances": 0,
+      "warnings": 0,
+      "assigned_unique": 79,
+      "total": 79
+    },
+    {
+      "form": "EX17",
+      "missing_instances": 0,
+      "warnings": 0,
+      "assigned_unique": 69,
+      "total": 69
+    },
+    {
+      "form": "EX18",
+      "missing_instances": 0,
+      "warnings": 0,
+      "assigned_unique": 105,
+      "total": 105
+    },
+    {
+      "form": "EX19",
+      "missing_instances": 0,
+      "warnings": 1,
+      "assigned_unique": 97,
+      "total": 98
+    },
+    {
+      "form": "EX20",
+      "missing_instances": 0,
+      "warnings": 0,
+      "assigned_unique": 104,
+      "total": 104
+    },
+    {
+      "form": "EX21",
+      "missing_instances": 0,
+      "warnings": 0,
+      "assigned_unique": 115,
+      "total": 116
+    },
+    {
+      "form": "EX22",
+      "missing_instances": 0,
+      "warnings": 10,
+      "assigned_unique": 87,
+      "total": 87
+    },
+    {
+      "form": "EX23",
+      "missing_instances": 0,
+      "warnings": 0,
+      "assigned_unique": 75,
+      "total": 75
+    },
+    {
+      "form": "EX24",
+      "missing_instances": 0,
+      "warnings": 0,
+      "assigned_unique": 108,
+      "total": 108
+    },
+    {
+      "form": "EX25",
+      "missing_instances": 0,
+      "warnings": 21,
+      "assigned_unique": 104,
+      "total": 104
+    },
+    {
+      "form": "EX26",
+      "missing_instances": 0,
+      "warnings": 2,
+      "assigned_unique": 102,
+      "total": 102
+    },
+    {
+      "form": "EX28",
+      "missing_instances": 0,
+      "warnings": 0,
+      "assigned_unique": 86,
+      "total": 86
+    },
+    {
+      "form": "EX29",
+      "missing_instances": 0,
+      "warnings": 0,
+      "assigned_unique": 72,
+      "total": 72
+    },
+    {
+      "form": "EX30",
+      "missing_instances": 0,
+      "warnings": 14,
+      "assigned_unique": 103,
+      "total": 104
+    }
+  ],
+  "all_zero": true
+}

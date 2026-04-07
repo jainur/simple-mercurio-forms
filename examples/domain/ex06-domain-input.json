@@ -1,0 +1,186 @@
+{
+  "applicant": {
+    "name": {
+      "first_name": "LUIS",
+      "last_name_1": "GARCIA",
+      "last_name_2": "MARTIN"
+    },
+    "identity": {
+      "passport": "P1234567",
+      "nie": {
+        "prefix": "X",
+        "number": "1234567",
+        "suffix": "L"
+      }
+    },
+    "birth_date": {
+      "day": "15",
+      "month": "03",
+      "year": "1985"
+    },
+    "birth_place": "MADRID",
+    "birth_country": "ESPANA",
+    "nationality": "ESPANOLA",
+    "father_name": "JOSE GARCIA PEREZ",
+    "mother_name": "MARIA MARTIN LOPEZ",
+    "address": {
+      "street": "CALLE MAYOR",
+      "number": "42",
+      "floor": "3A",
+      "city": "MADRID",
+      "postal_code": "28001",
+      "province": "MADRID"
+    },
+    "contact": {
+      "mobile": "612345678",
+      "email": "luis.garcia@ejemplo.es"
+    },
+    "legal_representative_name": "RODRIGUEZ FERNANDEZ, ANA",
+    "legal_representative_document": "12345678Z",
+    "legal_representative_title": "GESTOR ADMINISTRATIVO",
+    "sex": "M",
+    "marital_status": "S",
+    "has_school_age_children": "NO",
+    "dehu_consent": true
+  },
+  "representative": {
+    "name_or_corporate": "RODRIGUEZ FERNANDEZ, ANA",
+    "document": "12345678Z",
+    "address": {
+      "street": "CALLE GRAN VIA",
+      "number": "10",
+      "floor": "2B",
+      "city": "MADRID",
+      "postal_code": "28013",
+      "province": "MADRID"
+    },
+    "contact": {
+      "mobile": "698765432",
+      "email": "ana.rodriguez@gestoria.es"
+    },
+    "represented_person_name": "GARCIA MARTIN, LUIS",
+    "represented_person_document": "X1234567L",
+    "title": "GESTOR ADMINISTRATIVO"
+  },
+  "notification_address": {
+    "name_or_corporate": "GARCIA MARTIN, LUIS",
+    "document": "X1234567L",
+    "address": {
+      "street": "CALLE MAYOR",
+      "number": "42",
+      "floor": "3A",
+      "city": "MADRID",
+      "postal_code": "28001",
+      "province": "MADRID"
+    },
+    "contact": {
+      "mobile": "612345678",
+      "email": "luis.garcia@ejemplo.es"
+    }
+  },
+  "destination_office": {
+    "dirigida_a": "SUBDELEGACION DEL GOBIERNO EN MADRID",
+    "dir3_code": "L01280796",
+    "province": "MADRID"
+  },
+  "signature": {
+    "place": "MADRID",
+    "day": "06",
+    "month": "04",
+    "year": "2026",
+    "signature_text": "L. GARCIA MARTIN"
+  },
+  "authorization": {
+    "selected_tokens": []
+  },
+  "extra_field_values": {
+    "Texto1": "P1234567",
+    "Texto3": "X",
+    "Texto4": "1234567",
+    "Texto5": "L",
+    "Texto6": "GARCIA",
+    "Texto7": "MARTIN",
+    "Texto8": "LUIS",
+    "Casilla de verificación9": true,
+    "Casilla de verificación10": false,
+    "Casilla de verificación11": false,
+    "Texto12": "06",
+    "Texto13": "06",
+    "Texto14": "06",
+    "Texto15": "MADRID",
+    "Texto16": "ESPANA",
+    "Texto17": "ESPANOLA",
+    "Casilla de verificación18": true,
+    "Casilla de verificación19": false,
+    "Casilla de verificación20": false,
+    "Casilla de verificación21": false,
+    "Casilla de verificación22": false,
+    "Texto23": "VAL_022",
+    "Texto24": "VAL_023",
+    "Texto25": "CALLE MAYOR",
+    "Texto26": "42",
+    "Texto27": "3A",
+    "Texto28": "MADRID",
+    "Texto29": "28001",
+    "Texto30": "MADRID",
+    "Texto31": "612345678",
+    "Texto32": "luis.garcia@ejemplo.es",
+    "Texto33": "RODRIGUEZ FERNANDEZ, ANA",
+    "Texto34": "X1234567L",
+    "Texto35": "GESTOR",
+    "Texto36": "GARCIA MARTIN, LUIS",
+    "Texto37": "X1234567L",
+    "Texto38": "VAL_037",
+    "Texto39": "VAL_038",
+    "Texto40": "CALLE MAYOR",
+    "Texto41": "42",
+    "Texto42": "3A",
+    "Texto43": "MADRID",
+    "Texto44": "28001",
+    "Texto45": "MADRID",
+    "Texto46": "612345678",
+    "Texto47": "luis.garcia@ejemplo.es",
+    "Texto48": "RODRIGUEZ FERNANDEZ, ANA",
+    "Texto49": "X1234567L",
+    "Texto50": "GARCIA MARTIN, LUIS",
+    "Texto51": "X1234567L",
+    "Texto52": "CALLE MAYOR",
+    "Texto53": "42",
+    "Texto54": "3A",
+    "Texto55": "MADRID",
+    "Texto56": "28001",
+    "Texto57": "MADRID",
+    "Texto58": "612345678",
+    "Texto59": "luis.garcia@ejemplo.es",
+    "Texto60": "RODRIGUEZ FERNANDEZ, ANA",
+    "Texto61": "X1234567L",
+    "Texto62": "GESTOR",
+    "Texto63": "GARCIA MARTIN, LUIS",
+    "Texto64": "X1234567L",
+    "Texto65": "CALLE MAYOR",
+    "Texto66": "42",
+    "Texto67": "3A",
+    "Texto68": "MADRID",
+    "Texto69": "28001",
+    "Texto70": "MADRID",
+    "Texto71": "612345678",
+    "Texto72": "luis.garcia@ejemplo.es",
+    "Casilla de verificación73": true,
+    "Casilla de verificación74": true,
+    "Casilla de verificación75": false,
+    "Casilla de verificación76": false,
+    "Casilla de verificación77": false,
+    "Casilla de verificación78": false,
+    "Casilla de verificación79": false,
+    "Casilla de verificación80": false,
+    "Casilla de verificación81": false,
+    "Texto82": "MADRID",
+    "Texto83": "06",
+    "Texto84": "04",
+    "Texto85": "2026",
+    "Texto86": "RODRIGUEZ FERNANDEZ, ANA",
+    "Texto87": "SUBDELEGACION DEL GOBIERNO",
+    "Texto88": "L01280796",
+    "Texto89": "MADRID"
+  }
+}

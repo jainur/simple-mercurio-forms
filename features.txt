@@ -1,0 +1,14 @@
+I want you to implement a project:
+1. Download Immigration forms:
+1.1 Immigration forms are available as PDFs here (https://www.inclusion.gob.es/en/web/migraciones/modelos-generales). There are two versions of each form: editable and non-editable. 
+1.2 Download all editable forms and save them to the local storage. 
+1.3 Download all non-editable forms and save them to the local storage.
+
+2. Extract form fields of editable forms (./forms/editable/)
+2.1 Extract all fields which can be filled by a user from each of these forms. 
+2.2 Ensure to include all relevant field metadata / info to be extracted too. 
+2.3 For each form, save this form definition as a JSON file. 
+2.4 Import the form definitions into a database. I prefer to use rdbms but open to nosql or graph db as well
+
+3. Import Form Defintions
+3.1 Import the form definitions into a database. I prefer to use rdbms but open to nosql or graph db as well
