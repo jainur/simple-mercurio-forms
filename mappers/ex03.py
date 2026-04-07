@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
-from mappers.helpers import assign_checkboxes, coerce_str as _s, split_nie as _split_nie
+from mappers.helpers import apply_enum_registry as _apply_enum_registry, coerce_str as _s, map_identity_person_block as _map_identity_person_block, map_notification_block as _map_notification_block, map_optional_object_fields as _map_optional_object_fields
 
 if TYPE_CHECKING:
     from models.ex03 import EX03FormSchema
@@ -22,48 +22,46 @@ def to_field_values(form: EX03FormSchema) -> dict[str, Any]:
 
     # Section 1: Foreigner details
     f = form.foreigner_details
-    fv["Texto1"] = _s(f.passport)
-    if f.nie:
-        n1, n2, n3 = _split_nie(f.nie)
-        fv["Texto2"], fv["Texto3"], fv["Texto4"] = n1, n2, n3
-    else:
-        fv["Texto2"] = fv["Texto3"] = fv["Texto4"] = ""
-
-    fv["Texto5"] = f.first_surname
-    fv["Texto6"] = _s(f.second_surname)
-    fv["Texto7"] = f.name
-    fv["Texto8"] = f.date_of_birth.strftime("%d")
-    fv["Texto9"] = f.date_of_birth.strftime("%m")
-    fv["Texto10"] = f.date_of_birth.strftime("%Y")
-    fv["Texto11"] = f.birth_place
-    fv["Texto12"] = f.birth_country
-    fv["Texto13"] = f.nationality
-    fv["Texto14"] = _s(f.father_name)
-    fv["Texto15"] = _s(f.mother_name)
-    fv["Texto16"] = f.address
-    fv["Texto17"] = _s(f.address_number)
-    fv["Texto18"] = _s(f.floor_door)
-    fv["Texto19"] = f.city
-    fv["Texto20"] = f.postal_code
-    fv["Texto21"] = f.province
-    fv["Texto22"] = _s(f.mobile_phone)
-    fv["Texto23"] = _s(f.email)
-    fv["Texto24"] = _s(f.legal_guardian_name)
-    fv["Texto25"] = _s(f.legal_guardian_id)
-    fv["Texto26"] = _s(f.legal_guardian_title)
-
-    assign_checkboxes(fv, f.gender.value, {
-        "Casilla de verificación27": "X",
-        "Casilla de verificación28": "H",
-        "Casilla de verificación29": "M",
-    })
-    assign_checkboxes(fv, f.marital_status.value, {
-        "Casilla de verificación30": "S",
-        "Casilla de verificación31": "C",
-        "Casilla de verificación32": "V",
-        "Casilla de verificación33": "D",
-        "Casilla de verificación34": "Sp",
-    })
+    _map_identity_person_block(
+        fv,
+        f,
+        passport_field="Texto1",
+        nie_fields=("Texto2", "Texto3", "Texto4"),
+        date_fields=("Texto8", "Texto9", "Texto10"),
+        text_fields={
+            "first_surname": "Texto5",
+            "second_surname": "Texto6",
+            "name": "Texto7",
+            "birth_place": "Texto11",
+            "birth_country": "Texto12",
+            "nationality": "Texto13",
+            "father_name": "Texto14",
+            "mother_name": "Texto15",
+            "address": "Texto16",
+            "address_number": "Texto17",
+            "floor_door": "Texto18",
+            "city": "Texto19",
+            "postal_code": "Texto20",
+            "province": "Texto21",
+            "mobile_phone": "Texto22",
+            "email": "Texto23",
+            "legal_guardian_name": "Texto24",
+            "legal_guardian_id": "Texto25",
+            "legal_guardian_title": "Texto26",
+        },
+        gender_checkbox_map={
+            "Casilla de verificación27": "X",
+            "Casilla de verificación28": "H",
+            "Casilla de verificación29": "M",
+        },
+        marital_checkbox_map={
+            "Casilla de verificación30": "S",
+            "Casilla de verificación31": "C",
+            "Casilla de verificación32": "V",
+            "Casilla de verificación33": "D",
+            "Casilla de verificación34": "Sp",
+        },
+    )
     fv["Casilla de verificación35"] = f.children_in_school_age
     fv["Casilla de verificación36"] = not f.children_in_school_age
 
@@ -105,64 +103,81 @@ def to_field_values(form: EX03FormSchema) -> dict[str, Any]:
 
     # Section 4: Filing representative
     r = form.filing_representative
-    fv["Texto67"] = _s(r.name_or_company) if r else ""
-    fv["Texto68"] = _s(r.id_number) if r else ""
-    fv["Texto69"] = _s(r.address) if r else ""
-    fv["Texto70"] = _s(r.address_number) if r else ""
-    fv["Texto71"] = _s(r.floor_door) if r else ""
-    fv["Texto72"] = _s(r.city) if r else ""
-    fv["Texto73"] = _s(r.postal_code) if r else ""
-    fv["Texto74"] = _s(r.province) if r else ""
-    fv["Texto75"] = _s(r.phone) if r else ""
-    fv["Texto76"] = _s(r.email) if r else ""
-    fv["Texto77"] = _s(r.legal_rep_name) if r else ""
-    fv["Texto78"] = _s(r.legal_rep_id) if r else ""
-    fv["Texto79"] = _s(r.legal_rep_title) if r else ""
+    _map_optional_object_fields(
+        fv,
+        r,
+        text_fields={
+            "name_or_company": "Texto67",
+            "id_number": "Texto68",
+            "address": "Texto69",
+            "address_number": "Texto70",
+            "floor_door": "Texto71",
+            "city": "Texto72",
+            "postal_code": "Texto73",
+            "province": "Texto74",
+            "phone": "Texto75",
+            "email": "Texto76",
+            "legal_rep_name": "Texto77",
+            "legal_rep_id": "Texto78",
+            "legal_rep_title": "Texto79",
+        },
+    )
 
     # Section 5: Notification address
     n = form.notification_address
-    fv["Texto80"] = n.name_or_company
-    fv["Texto81"] = n.id_number
-    fv["Texto82"] = n.address
-    fv["Texto83"] = _s(n.address_number)
-    fv["Texto84"] = _s(n.floor_door)
-    fv["Texto85"] = n.city
-    fv["Texto86"] = n.postal_code
-    fv["Texto87"] = n.province
-    fv["Texto88"] = _s(n.mobile_phone)
-    fv["Texto89"] = _s(n.email)
-    fv["Casilla de verificación90"] = n.consent_electronic_notifications
+    _map_notification_block(
+        fv,
+        n,
+        text_fields={
+            "name_or_company": "Texto80",
+            "id_number": "Texto81",
+            "address": "Texto82",
+            "address_number": "Texto83",
+            "floor_door": "Texto84",
+            "city": "Texto85",
+            "postal_code": "Texto86",
+            "province": "Texto87",
+            "mobile_phone": "Texto88",
+            "email": "Texto89",
+        },
+        consent_field="Casilla de verificación90",
+    )
 
     # Section 6: Request + signature + office
     req = form.request_details
 
     is_initial = req.application_phase == ApplicationPhaseEnum.INITIAL
     is_renewal = req.application_phase == ApplicationPhaseEnum.RENEWAL
-    fv["Casilla de verificación91"] = is_initial
-    fv["Casilla de verificación105"] = is_renewal
-
-    fv["Casilla de verificación92"] = req.initial_eligibility == InitialEligibilityEnum.INTERNATIONAL_AGREEMENTS_CHILE_PERU_ART_74_2
-    fv["Casilla de verificación93"] = req.initial_eligibility == InitialEligibilityEnum.EXEMPTION_ART_40_LO_4_2000
-    fv["Casilla de verificación94"] = req.initial_eligibility == InitialEligibilityEnum.HARD_TO_FILL_OCCUPATION_CATALOG
-    fv["Casilla de verificación95"] = req.initial_eligibility == InitialEligibilityEnum.PUBLIC_EMPLOYMENT_SERVICE_OFFER
-    fv["Casilla de verificación96"] = req.initial_eligibility == InitialEligibilityEnum.COUNCIL_OF_MINISTERS_INSTRUCTIONS_DA2_1
-    fv["Casilla de verificación97"] = req.initial_eligibility == InitialEligibilityEnum.PROFESSIONAL_ATHLETES_2005
-    fv["Casilla de verificación98"] = req.initial_eligibility == InitialEligibilityEnum.MERCHANT_MARINE_2007
-    fv["Casilla de verificación99"] = req.initial_eligibility == InitialEligibilityEnum.FISHING_VESSEL_2019
-    fv["Casilla de verificación100"] = req.initial_eligibility == InitialEligibilityEnum.THIRD_GRADE_OR_PAROLE_2005
-    fv["Casilla de verificación101"] = req.initial_eligibility == InitialEligibilityEnum.INTERNATIONAL_AGREEMENTS_ANDORRA
-    fv["Casilla de verificación102"] = req.initial_eligibility == InitialEligibilityEnum.CROSS_BORDER_WORKER_ART_157
-    fv["Casilla de verificación103"] = req.initial_eligibility == InitialEligibilityEnum.EMPLOYER_CHANGE_BREACH_ART_79_2
-    fv["Casilla de verificación104"] = req.initial_eligibility == InitialEligibilityEnum.EMPLOYER_CHANGE_OVERRIDING_CIRCUMSTANCES_ART_79_3
-
+    _apply_enum_registry(fv, req.application_phase, {
+        "Casilla de verificación91": ApplicationPhaseEnum.INITIAL,
+        "Casilla de verificación105": ApplicationPhaseEnum.RENEWAL,
+    })
+    _apply_enum_registry(fv, req.initial_eligibility, {
+        "Casilla de verificación92": InitialEligibilityEnum.INTERNATIONAL_AGREEMENTS_CHILE_PERU_ART_74_2,
+        "Casilla de verificación93": InitialEligibilityEnum.EXEMPTION_ART_40_LO_4_2000,
+        "Casilla de verificación94": InitialEligibilityEnum.HARD_TO_FILL_OCCUPATION_CATALOG,
+        "Casilla de verificación95": InitialEligibilityEnum.PUBLIC_EMPLOYMENT_SERVICE_OFFER,
+        "Casilla de verificación96": InitialEligibilityEnum.COUNCIL_OF_MINISTERS_INSTRUCTIONS_DA2_1,
+        "Casilla de verificación97": InitialEligibilityEnum.PROFESSIONAL_ATHLETES_2005,
+        "Casilla de verificación98": InitialEligibilityEnum.MERCHANT_MARINE_2007,
+        "Casilla de verificación99": InitialEligibilityEnum.FISHING_VESSEL_2019,
+        "Casilla de verificación100": InitialEligibilityEnum.THIRD_GRADE_OR_PAROLE_2005,
+        "Casilla de verificación101": InitialEligibilityEnum.INTERNATIONAL_AGREEMENTS_ANDORRA,
+        "Casilla de verificación102": InitialEligibilityEnum.CROSS_BORDER_WORKER_ART_157,
+        "Casilla de verificación103": InitialEligibilityEnum.EMPLOYER_CHANGE_BREACH_ART_79_2,
+        "Casilla de verificación104": InitialEligibilityEnum.EMPLOYER_CHANGE_OVERRIDING_CIRCUMSTANCES_ART_79_3,
+    }, enabled=is_initial)
     fv["Casilla de verificación106"] = is_renewal
-    fv["Casilla de verificación107"] = req.renewal_ground == RenewalGroundEnum.GENERAL_ART_81_1
-    fv["Casilla de verificación108"] = req.renewal_ground == RenewalGroundEnum.UNEMPLOYMENT_BENEFIT
-    fv["Casilla de verificación109"] = req.renewal_ground == RenewalGroundEnum.CROSS_BORDER_WORKER_ART_158
-    fv["Casilla de verificación110"] = req.renewal_ground == RenewalGroundEnum.THIRD_GRADE_OR_PAROLE_2005
-
-    fv["Casilla de verificación111"] = req.filing_party == FilingPartyEnum.FOREIGN_WORKER
-    fv["Casilla de verificación112"] = req.filing_party == FilingPartyEnum.EMPLOYER
+    _apply_enum_registry(fv, req.renewal_ground, {
+        "Casilla de verificación107": RenewalGroundEnum.GENERAL_ART_81_1,
+        "Casilla de verificación108": RenewalGroundEnum.UNEMPLOYMENT_BENEFIT,
+        "Casilla de verificación109": RenewalGroundEnum.CROSS_BORDER_WORKER_ART_158,
+        "Casilla de verificación110": RenewalGroundEnum.THIRD_GRADE_OR_PAROLE_2005,
+    }, enabled=is_renewal)
+    _apply_enum_registry(fv, req.filing_party, {
+        "Casilla de verificación111": FilingPartyEnum.FOREIGN_WORKER,
+        "Casilla de verificación112": FilingPartyEnum.EMPLOYER,
+    })
 
     sig = form.signature
     fv["Texto113"] = sig.place

@@ -19,24 +19,12 @@ from typing import Optional
 
 from pydantic import BaseModel, EmailStr, Field
 from models.common_sections import ApplicantGuardianMaritalWithChildrenSectionBase, FilingRepresentativeDetailsBase, NotificationAddressBase, OfficeDetailsBase, SignatureFieldsBase
+from models.shared_enums import GenderEnum, MaritalStatusEnum
 
 
 # ---------------------------------------------------------------------------
 # Enums
 # ---------------------------------------------------------------------------
-
-class GenderEnum(str, Enum):
-    MALE   = "H"
-    FEMALE = "M"
-
-
-class MaritalStatusEnum(str, Enum):
-    SINGLE    = "S"
-    MARRIED   = "C"
-    WIDOWED   = "V"
-    DIVORCED  = "D"
-    SEPARATED = "Sp"
-
 
 class ApplicationCategoryEnum(str, Enum):
     RESIDENCIA_INICIAL = "RESIDENCIA_INICIAL"

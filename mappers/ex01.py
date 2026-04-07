@@ -8,7 +8,7 @@ forms/definitions/EX01.json (96 fields).
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
-from mappers.helpers import assign_checkboxes, coerce_str as _s, split_nie as _split_nie
+from mappers.helpers import apply_enum_registry as _apply_enum_registry, coerce_str as _s, map_identity_person_block as _map_identity_person_block, map_notification_block as _map_notification_block, map_optional_object_fields as _map_optional_object_fields, split_nie as _split_nie
 
 if TYPE_CHECKING:
     from models.ex01 import EX01FormSchema
@@ -25,53 +25,46 @@ def to_field_values(form: EX01FormSchema) -> dict[str, Any]:
     # -------------------------------------------------------------------------
     fd = form.foreigner_details
 
-    fv["Texto1"] = _s(fd.passport)
-
-    if fd.nie:
-        s1, s2, s3 = _split_nie(fd.nie)
-        fv["Texto2"], fv["Texto3"], fv["Texto4"] = s1, s2, s3
-    else:
-        fv["Texto2"] = fv["Texto3"] = fv["Texto4"] = ""
-
-    fv["Texto5"]  = fd.first_surname
-    fv["Texto6"]  = _s(fd.second_surname)
-    fv["Texto7"]  = fd.name
-
-    # Sexo
-    assign_checkboxes(fv, fd.gender.value, {
-        "Casilla de verificación2": "X",
-        "Casilla de verificación3": "H",
-        "Casilla de verificación4": "M",
-    })
-
-    fv["Texto8"]  = fd.date_of_birth.strftime("%d")
-    fv["Texto9"]  = fd.date_of_birth.strftime("%m")
-    fv["Texto10"] = fd.date_of_birth.strftime("%Y")
-    fv["Texto11"] = fd.birth_place
-    fv["Texto12"] = fd.birth_country
-    fv["Texto13"] = fd.nationality
-    fv["Texto14"] = _s(fd.father_name)
-    fv["Texto15"] = _s(fd.mother_name)
-    fv["Texto16"] = fd.address
-    fv["Texto17"] = _s(fd.address_number)
-    fv["Texto18"] = _s(fd.floor_door)
-    fv["Texto19"] = fd.city
-    fv["Texto20"] = fd.postal_code
-    fv["Texto21"] = fd.province
-    fv["Texto22"] = _s(fd.mobile_phone)
-    fv["Texto23"] = _s(fd.email)
-    fv["Texto24"] = _s(fd.legal_guardian_name)
-    fv["Texto25"] = _s(fd.legal_guardian_id)
-    fv["Texto26"] = _s(fd.legal_guardian_title)
-
-    # Estado civil (section 1 row)
-    assign_checkboxes(fv, fd.marital_status.value, {
-        "Casilla de verificación5": "S",
-        "Casilla de verificación6": "C",
-        "Casilla de verificación7": "V",
-        "Casilla de verificación9": "Sp",
-        "Casilla de verificación8": "D",
-    })
+    _map_identity_person_block(
+        fv,
+        fd,
+        passport_field="Texto1",
+        nie_fields=("Texto2", "Texto3", "Texto4"),
+        date_fields=("Texto8", "Texto9", "Texto10"),
+        text_fields={
+            "first_surname": "Texto5",
+            "second_surname": "Texto6",
+            "name": "Texto7",
+            "birth_place": "Texto11",
+            "birth_country": "Texto12",
+            "nationality": "Texto13",
+            "father_name": "Texto14",
+            "mother_name": "Texto15",
+            "address": "Texto16",
+            "address_number": "Texto17",
+            "floor_door": "Texto18",
+            "city": "Texto19",
+            "postal_code": "Texto20",
+            "province": "Texto21",
+            "mobile_phone": "Texto22",
+            "email": "Texto23",
+            "legal_guardian_name": "Texto24",
+            "legal_guardian_id": "Texto25",
+            "legal_guardian_title": "Texto26",
+        },
+        gender_checkbox_map={
+            "Casilla de verificación2": "X",
+            "Casilla de verificación3": "H",
+            "Casilla de verificación4": "M",
+        },
+        marital_checkbox_map={
+            "Casilla de verificación5": "S",
+            "Casilla de verificación6": "C",
+            "Casilla de verificación7": "V",
+            "Casilla de verificación9": "Sp",
+            "Casilla de verificación8": "D",
+        },
+    )
 
     # Hijas/os a cargo
     fv["Casilla de verificación10"] = fd.children_in_school_age          # SÍ
@@ -101,12 +94,12 @@ def to_field_values(form: EX01FormSchema) -> dict[str, Any]:
     fv["Texto40"] = rh.relationship            if rh else ""
 
     # Sexo / Estado civil of resource holder
-    assign_checkboxes(fv, rh.gender.value if rh else None, {
+    _apply_enum_registry(fv, rh.gender if rh else None, {
         "Casilla de verificación12": "X",
         "Casilla de verificación13": "H",
         "Casilla de verificación14": "M",
     })
-    assign_checkboxes(fv, rh.marital_status.value if rh else None, {
+    _apply_enum_registry(fv, rh.marital_status if rh else None, {
         "Casilla de verificación15": "S",
         "Casilla de verificación16": "C",
         "Casilla de verificación17": "V",
@@ -118,35 +111,47 @@ def to_field_values(form: EX01FormSchema) -> dict[str, Any]:
     # Section 3 – DATOS DEL REPRESENTANTE A EFECTOS DE PRESENTACIÓN
     # -------------------------------------------------------------------------
     pres = form.presenter_details
-    fv["Texto41"] = _s(pres.name_or_company) if pres else ""
-    fv["Texto42"] = _s(pres.id_number)       if pres else ""
-    fv["Texto43"] = _s(pres.address)         if pres else ""
-    fv["Texto44"] = _s(pres.address_number)  if pres else ""
-    fv["Texto45"] = _s(pres.floor_door)      if pres else ""
-    fv["Texto46"] = _s(pres.city)            if pres else ""
-    fv["Texto47"] = _s(pres.postal_code)     if pres else ""
-    fv["Texto48"] = _s(pres.province)        if pres else ""
-    fv["Texto49"] = _s(pres.mobile_phone)    if pres else ""
-    fv["Texto50"] = _s(pres.email)           if pres else ""
-    fv["Texto51"] = _s(pres.legal_rep_name)  if pres else ""
-    fv["Texto52"] = _s(pres.legal_rep_id)    if pres else ""
-    fv["Texto53"] = _s(pres.legal_rep_title) if pres else ""
+    _map_optional_object_fields(
+        fv,
+        pres,
+        text_fields={
+            "name_or_company": "Texto41",
+            "id_number": "Texto42",
+            "address": "Texto43",
+            "address_number": "Texto44",
+            "floor_door": "Texto45",
+            "city": "Texto46",
+            "postal_code": "Texto47",
+            "province": "Texto48",
+            "mobile_phone": "Texto49",
+            "email": "Texto50",
+            "legal_rep_name": "Texto51",
+            "legal_rep_id": "Texto52",
+            "legal_rep_title": "Texto53",
+        },
+    )
 
     # -------------------------------------------------------------------------
     # Section 4 – DOMICILIO A EFECTOS DE NOTIFICACIONES
     # -------------------------------------------------------------------------
     notif = form.notification_address
-    fv["Texto54"] = notif.name_or_company
-    fv["Texto55"] = notif.id_number
-    fv["Texto56"] = notif.address
-    fv["Texto57"] = _s(notif.address_number)
-    fv["Texto58"] = _s(notif.floor_door)
-    fv["Texto59"] = notif.city
-    fv["Texto60"] = notif.postal_code
-    fv["Texto61"] = notif.province
-    fv["Texto62"] = _s(notif.mobile_phone)
-    fv["Texto63"] = _s(notif.email)
-    fv["Casilla de verificación20"] = notif.consent_electronic_notifications
+    _map_notification_block(
+        fv,
+        notif,
+        text_fields={
+            "name_or_company": "Texto54",
+            "id_number": "Texto55",
+            "address": "Texto56",
+            "address_number": "Texto57",
+            "floor_door": "Texto58",
+            "city": "Texto59",
+            "postal_code": "Texto60",
+            "province": "Texto61",
+            "mobile_phone": "Texto62",
+            "email": "Texto63",
+        },
+        consent_field="Casilla de verificación20",
+    )
 
     # -------------------------------------------------------------------------
     # Section 5 – TIPO DE AUTORIZACIÓN SOLICITADA
@@ -160,12 +165,18 @@ def to_field_values(form: EX01FormSchema) -> dict[str, Any]:
     is_titular   = role == ApplicantRoleEnum.TITULAR_RECURSOS
     is_familiar  = role == ApplicantRoleEnum.FAMILIAR_TITULAR_RECURSOS
 
-    fv["Casilla de verificación21"] = is_inicial
-    fv["Casilla de verificación22"] = is_inicial and is_titular
-    fv["Casilla de verificación23"] = is_inicial and is_familiar
-    fv["Casilla de verificación24"] = is_renovacion
-    fv["Casilla de verificación25"] = is_renovacion and is_titular
-    fv["Casilla de verificación26"] = is_renovacion and is_familiar
+    _apply_enum_registry(fv, cat, {
+        "Casilla de verificación21": ApplicationCategoryEnum.RESIDENCIA_INICIAL,
+        "Casilla de verificación24": ApplicationCategoryEnum.RENOVACION,
+    })
+    _apply_enum_registry(fv, role, {
+        "Casilla de verificación22": ApplicantRoleEnum.TITULAR_RECURSOS,
+        "Casilla de verificación23": ApplicantRoleEnum.FAMILIAR_TITULAR_RECURSOS,
+    }, enabled=is_inicial)
+    _apply_enum_registry(fv, role, {
+        "Casilla de verificación25": ApplicantRoleEnum.TITULAR_RECURSOS,
+        "Casilla de verificación26": ApplicantRoleEnum.FAMILIAR_TITULAR_RECURSOS,
+    }, enabled=is_renovacion)
 
     # -------------------------------------------------------------------------
     # Signature footer

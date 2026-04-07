@@ -59,7 +59,7 @@ class ApplicantGuardianMaritalWithChildrenSectionBase(
     Generic[TGender, TMarital],
 ):
     has_school_age_children_in_spain: Optional[bool] = None
-    children_in_school_age: Optional[str] = None
+    children_in_school_age: bool = False
 
 
 class ApplicantLegalRepresentativeSectionBase(_IdentityCoreBase[TGender, TMarital], Generic[TGender, TMarital]):
@@ -73,7 +73,7 @@ class ApplicantLegalRepresentativeWithChildrenSectionBase(
     Generic[TGender, TMarital],
 ):
     has_school_age_children_in_spain: Optional[bool] = None
-    children_in_school_age: Optional[str] = None
+    children_in_school_age: bool = False
 
 
 class FilingRepresentativeDetailsBase(BaseModel):

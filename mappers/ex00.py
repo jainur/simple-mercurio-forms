@@ -8,7 +8,7 @@ against the form definition (forms/definitions/EX00.json).
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
-from mappers.helpers import assign_checkboxes, coerce_str as _s, split_nie as _split_nie
+from mappers.helpers import apply_enum_registry as _apply_enum_registry, coerce_str as _s, map_identity_person_block as _map_identity_person_block, map_notification_block as _map_notification_block, map_optional_object_fields as _map_optional_object_fields
 
 if TYPE_CHECKING:
     from models.ex00 import EX00FormSchema
@@ -35,54 +35,46 @@ def to_field_values(form: EX00FormSchema) -> dict[str, Any]:
     # -------------------------------------------------------------------------
     fd = form.foreigner_details
 
-    fv["Texto1"] = _s(fd.passport)
-
-    if fd.nie:
-        seg1, seg2, seg3 = _split_nie(fd.nie)
-        fv["Texto2"] = seg1
-        fv["Texto3"] = seg2
-        fv["Texto4"] = seg3
-    else:
-        fv["Texto2"] = fv["Texto3"] = fv["Texto4"] = ""
-
-    fv["Texto5"]  = fd.first_surname
-    fv["Texto6"]  = _s(fd.second_surname)
-    fv["Texto7"]  = fd.name
-    fv["Texto8"]  = fd.date_of_birth.strftime("%d")
-    fv["Texto9"]  = fd.date_of_birth.strftime("%m")
-    fv["Texto10"] = fd.date_of_birth.strftime("%Y")
-    fv["Texto11"] = fd.birth_place
-    fv["Texto12"] = fd.birth_country
-    fv["Texto13"] = fd.nationality
-    fv["Texto14"] = _s(fd.father_name)
-    fv["Texto15"] = _s(fd.mother_name)
-    fv["Texto16"] = fd.address
-    fv["Texto17"] = _s(fd.address_number)
-    fv["Texto18"] = _s(fd.floor_door)
-    fv["Texto19"] = fd.city
-    fv["Texto20"] = fd.postal_code
-    fv["Texto21"] = fd.province
-    fv["Texto22"] = _s(fd.mobile_phone)
-    fv["Texto23"] = _s(fd.email)
-    fv["Texto24"] = _s(fd.legal_guardian_name)
-    fv["Texto25"] = _s(fd.legal_guardian_id)
-    fv["Texto26"] = _s(fd.legal_guardian_title)
-
-    # Sexo (X = indeterminado/other)
-    assign_checkboxes(fv, fd.gender.value, {
-        "Casilla de verificación2": "X",
-        "Casilla de verificación3": "H",
-        "Casilla de verificación4": "M",
-    })
-
-    # Estado civil
-    assign_checkboxes(fv, fd.marital_status.value, {
-        "Casilla de verificación5": "S",
-        "Casilla de verificación6": "C",
-        "Casilla de verificación7": "V",
-        "Casilla de verificación8": "D",
-        "Casilla de verificación9": "Sp",
-    })
+    _map_identity_person_block(
+        fv,
+        fd,
+        passport_field="Texto1",
+        nie_fields=("Texto2", "Texto3", "Texto4"),
+        date_fields=("Texto8", "Texto9", "Texto10"),
+        text_fields={
+            "first_surname": "Texto5",
+            "second_surname": "Texto6",
+            "name": "Texto7",
+            "birth_place": "Texto11",
+            "birth_country": "Texto12",
+            "nationality": "Texto13",
+            "father_name": "Texto14",
+            "mother_name": "Texto15",
+            "address": "Texto16",
+            "address_number": "Texto17",
+            "floor_door": "Texto18",
+            "city": "Texto19",
+            "postal_code": "Texto20",
+            "province": "Texto21",
+            "mobile_phone": "Texto22",
+            "email": "Texto23",
+            "legal_guardian_name": "Texto24",
+            "legal_guardian_id": "Texto25",
+            "legal_guardian_title": "Texto26",
+        },
+        gender_checkbox_map={
+            "Casilla de verificación2": "X",
+            "Casilla de verificación3": "H",
+            "Casilla de verificación4": "M",
+        },
+        marital_checkbox_map={
+            "Casilla de verificación5": "S",
+            "Casilla de verificación6": "C",
+            "Casilla de verificación7": "V",
+            "Casilla de verificación8": "D",
+            "Casilla de verificación9": "Sp",
+        },
+    )
 
     # -------------------------------------------------------------------------
     # Section 2 – DATOS DE INSTITUCIÓN / CENTRO DE ESTUDIOS
@@ -137,54 +129,72 @@ def to_field_values(form: EX00FormSchema) -> dict[str, Any]:
     # Section 5 – DATOS DEL EMPLEADOR/A
     # -------------------------------------------------------------------------
     emp = form.employer_details
-    fv["Texto50"] = _s(emp.name_or_company) if emp else ""
-    fv["Texto51"] = _s(emp.dni_nie_pas)     if emp else ""
-    fv["Texto52"] = _s(emp.activity)        if emp else ""
-    fv["Texto53"] = _s(emp.occupation)      if emp else ""
-    fv["Texto54"] = _s(emp.address)         if emp else ""
-    fv["Texto55"] = _s(emp.address_number)  if emp else ""
-    fv["Texto56"] = _s(emp.floor_door)      if emp else ""
-    fv["Texto57"] = _s(emp.city)            if emp else ""
-    fv["Texto58"] = _s(emp.postal_code)     if emp else ""
-    fv["Texto59"] = _s(emp.province)        if emp else ""
-    fv["Texto60"] = _s(emp.mobile_phone)    if emp else ""
-    fv["Texto61"] = _s(emp.email)           if emp else ""
-    fv["Texto62"] = _s(emp.legal_rep_name)  if emp else ""
-    fv["Texto63"] = _s(emp.legal_rep_id)    if emp else ""
+    _map_optional_object_fields(
+        fv,
+        emp,
+        text_fields={
+            "name_or_company": "Texto50",
+            "dni_nie_pas": "Texto51",
+            "activity": "Texto52",
+            "occupation": "Texto53",
+            "address": "Texto54",
+            "address_number": "Texto55",
+            "floor_door": "Texto56",
+            "city": "Texto57",
+            "postal_code": "Texto58",
+            "province": "Texto59",
+            "mobile_phone": "Texto60",
+            "email": "Texto61",
+            "legal_rep_name": "Texto62",
+            "legal_rep_id": "Texto63",
+        },
+    )
 
     # -------------------------------------------------------------------------
     # Section 6 – DATOS DEL REPRESENTANTE (PRESENTACIÓN)
     # -------------------------------------------------------------------------
     pres = form.presenter_details
-    fv["Texto64"] = _s(pres.name_or_company) if pres else ""
-    fv["Texto65"] = _s(pres.id_number)       if pres else ""
-    fv["Texto66"] = _s(pres.address)         if pres else ""
-    fv["Texto67"] = _s(pres.address_number)  if pres else ""
-    fv["Texto68"] = _s(pres.floor_door)      if pres else ""
-    fv["Texto69"] = _s(pres.city)            if pres else ""
-    fv["Texto70"] = _s(pres.postal_code)     if pres else ""
-    fv["Texto71"] = _s(pres.province)        if pres else ""
-    fv["Texto72"] = _s(pres.mobile_phone)    if pres else ""
-    fv["Texto73"] = _s(pres.email)           if pres else ""
-    fv["Texto74"] = _s(pres.legal_rep_name)  if pres else ""
-    fv["Texto75"] = _s(pres.legal_rep_id)    if pres else ""
-    fv["Texto76"] = _s(pres.legal_rep_title) if pres else ""
+    _map_optional_object_fields(
+        fv,
+        pres,
+        text_fields={
+            "name_or_company": "Texto64",
+            "id_number": "Texto65",
+            "address": "Texto66",
+            "address_number": "Texto67",
+            "floor_door": "Texto68",
+            "city": "Texto69",
+            "postal_code": "Texto70",
+            "province": "Texto71",
+            "mobile_phone": "Texto72",
+            "email": "Texto73",
+            "legal_rep_name": "Texto74",
+            "legal_rep_id": "Texto75",
+            "legal_rep_title": "Texto76",
+        },
+    )
 
     # -------------------------------------------------------------------------
     # Section 7 – DOMICILIO A EFECTOS DE NOTIFICACIONES
     # -------------------------------------------------------------------------
     notif = form.notification_address
-    fv["Texto77"] = notif.name_or_company
-    fv["Texto78"] = notif.id_number
-    fv["Texto79"] = notif.address
-    fv["Texto80"] = _s(notif.address_number)
-    fv["Texto81"] = _s(notif.floor_door)
-    fv["Texto82"] = notif.city
-    fv["Texto83"] = notif.postal_code
-    fv["Texto84"] = notif.province
-    fv["Texto85"] = _s(notif.mobile_phone)
-    fv["Texto86"] = _s(notif.email)
-    fv["Casilla de verificación17"] = notif.consent_electronic_notifications
+    _map_notification_block(
+        fv,
+        notif,
+        text_fields={
+            "name_or_company": "Texto77",
+            "id_number": "Texto78",
+            "address": "Texto79",
+            "address_number": "Texto80",
+            "floor_door": "Texto81",
+            "city": "Texto82",
+            "postal_code": "Texto83",
+            "province": "Texto84",
+            "mobile_phone": "Texto85",
+            "email": "Texto86",
+        },
+        consent_field="Casilla de verificación17",
+    )
 
     # -------------------------------------------------------------------------
     # Signature footer

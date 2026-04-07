@@ -22,24 +22,12 @@ from enum import Enum
 from typing import Optional
 
 from pydantic import BaseModel, EmailStr, Field
+from models.shared_enums import GenderEnum, MaritalStatusEnum
 
 
 # ---------------------------------------------------------------------------
 # Enums
 # ---------------------------------------------------------------------------
-
-class GenderEnum(str, Enum):
-    MALE   = "H"
-    FEMALE = "M"
-
-
-class MaritalStatusEnum(str, Enum):
-    SINGLE    = "S"
-    MARRIED   = "C"
-    WIDOWED   = "V"
-    DIVORCED  = "D"
-    SEPARATED = "Sp"
-
 
 class InstitutionRecognitionTypeEnum(str, Enum):
     """Recognition type for the study institution (section 2 checkboxes)."""
