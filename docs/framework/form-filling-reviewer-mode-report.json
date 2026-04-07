@@ -1,0 +1,393 @@
+{
+  "summary": {
+    "forms_tested": 25,
+    "baseline_total_blank_text_values": 161,
+    "reviewer_mode_total_blank_text_values": 0,
+    "total_replacements": 161,
+    "forms_still_with_blanks": []
+  },
+  "results": [
+    {
+      "form": "EX00",
+      "baseline_blank_text_values": 0,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 0,
+      "replaced_samples": [],
+      "output_pdf": "forms/filled/canonical-v3/EX00-canonical-v3.pdf"
+    },
+    {
+      "form": "EX01",
+      "baseline_blank_text_values": 9,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 9,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto24",
+        "Texto25",
+        "Texto26",
+        "Texto28",
+        "Texto29",
+        "Texto30"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX01-canonical-v3.pdf"
+    },
+    {
+      "form": "EX02",
+      "baseline_blank_text_values": 6,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 6,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto27",
+        "Texto28",
+        "Texto29"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX02-canonical-v3.pdf"
+    },
+    {
+      "form": "EX03",
+      "baseline_blank_text_values": 8,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 8,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto24",
+        "Texto25",
+        "Texto26",
+        "Texto43",
+        "Texto63"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX03-canonical-v3.pdf"
+    },
+    {
+      "form": "EX04",
+      "baseline_blank_text_values": 6,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 6,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto24",
+        "Texto25",
+        "Texto26"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX04-canonical-v3.pdf"
+    },
+    {
+      "form": "EX06",
+      "baseline_blank_text_values": 7,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 7,
+      "replaced_samples": [
+        "Texto3",
+        "Texto4",
+        "Texto5",
+        "Texto33",
+        "Texto34",
+        "Texto35",
+        "Texto42"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX06-canonical-v3.pdf"
+    },
+    {
+      "form": "EX07",
+      "baseline_blank_text_values": 6,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 6,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto24",
+        "Texto25",
+        "Texto26"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX07-canonical-v3.pdf"
+    },
+    {
+      "form": "EX09",
+      "baseline_blank_text_values": 4,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 4,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto62"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX09-canonical-v3.pdf"
+    },
+    {
+      "form": "EX10",
+      "baseline_blank_text_values": 13,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 13,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto24",
+        "Texto25",
+        "Texto26",
+        "Texto28",
+        "Texto29",
+        "Texto30",
+        "Texto150"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX10-canonical-v3.pdf"
+    },
+    {
+      "form": "EX11",
+      "baseline_blank_text_values": 6,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 6,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto24",
+        "Texto25",
+        "Texto26"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX11-canonical-v3.pdf"
+    },
+    {
+      "form": "EX13",
+      "baseline_blank_text_values": 9,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 9,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto24",
+        "Texto25",
+        "Texto26",
+        "Texto74",
+        "Texto75",
+        "Texto27"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX13-canonical-v3.pdf"
+    },
+    {
+      "form": "EX16",
+      "baseline_blank_text_values": 6,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 6,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto24",
+        "Texto25",
+        "Texto26"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX16-canonical-v3.pdf"
+    },
+    {
+      "form": "EX17",
+      "baseline_blank_text_values": 6,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 6,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto24",
+        "Texto25",
+        "Texto26"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX17-canonical-v3.pdf"
+    },
+    {
+      "form": "EX18",
+      "baseline_blank_text_values": 9,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 9,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto24",
+        "Texto25",
+        "Texto26",
+        "Texto57",
+        "Texto58",
+        "Texto59"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX18-canonical-v3.pdf"
+    },
+    {
+      "form": "EX19",
+      "baseline_blank_text_values": 9,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 9,
+      "replaced_samples": [
+        "Texto3",
+        "Texto4",
+        "Texto5",
+        "Texto25",
+        "Texto26",
+        "Texto27",
+        "Texto29",
+        "Texto30",
+        "Texto31"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX19-canonical-v3.pdf"
+    },
+    {
+      "form": "EX20",
+      "baseline_blank_text_values": 9,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 9,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto24",
+        "Texto25",
+        "Texto26",
+        "Texto64",
+        "Texto65",
+        "Texto66"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX20-canonical-v3.pdf"
+    },
+    {
+      "form": "EX21",
+      "baseline_blank_text_values": 9,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 9,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto20",
+        "Texto22",
+        "Texto23",
+        "Texto57",
+        "Texto65",
+        "Texto66"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX21-canonical-v3.pdf"
+    },
+    {
+      "form": "EX22",
+      "baseline_blank_text_values": 9,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 9,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto18",
+        "Texto19",
+        "Texto20",
+        "Texto27",
+        "Texto54",
+        "Texto55"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX22-canonical-v3.pdf"
+    },
+    {
+      "form": "EX23",
+      "baseline_blank_text_values": 7,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 7,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto24",
+        "Texto25",
+        "Texto26",
+        "Texto58"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX23-canonical-v3.pdf"
+    },
+    {
+      "form": "EX24",
+      "baseline_blank_text_values": 6,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 6,
+      "replaced_samples": [
+        "Texto2",
+        "Texto3",
+        "Texto4",
+        "Texto24",
+        "Texto25",
+        "Texto26"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX24-canonical-v3.pdf"
+    },
+    {
+      "form": "EX25",
+      "baseline_blank_text_values": 4,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 4,
+      "replaced_samples": [
+        "Texto158",
+        "Texto159",
+        "Texto160",
+        "Texto230"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX25-canonical-v3.pdf"
+    },
+    {
+      "form": "EX26",
+      "baseline_blank_text_values": 3,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 3,
+      "replaced_samples": [
+        "Texto24",
+        "Texto25",
+        "Texto26"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX26-canonical-v3.pdf"
+    },
+    {
+      "form": "EX28",
+      "baseline_blank_text_values": 3,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 3,
+      "replaced_samples": [
+        "Texto26",
+        "Texto27",
+        "Texto28"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX28-canonical-v3.pdf"
+    },
+    {
+      "form": "EX29",
+      "baseline_blank_text_values": 4,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 4,
+      "replaced_samples": [
+        "Texto24",
+        "Texto25",
+        "Texto26",
+        "Texto50"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX29-canonical-v3.pdf"
+    },
+    {
+      "form": "EX30",
+      "baseline_blank_text_values": 3,
+      "reviewer_mode_blank_text_values": 0,
+      "replaced_blank_text_values": 3,
+      "replaced_samples": [
+        "Texto24",
+        "Texto25",
+        "Texto26"
+      ],
+      "output_pdf": "forms/filled/canonical-v3/EX30-canonical-v3.pdf"
+    }
+  ]
+}
