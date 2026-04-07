@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
-from mappers.helpers import assign_checkboxes, coerce_str as _s, split_nie as _split_nie
+from mappers.helpers import apply_enum_registry as _apply_enum_registry, coerce_str as _s, map_identity_person_block as _map_identity_person_block, map_notification_block as _map_notification_block, map_optional_object_fields as _map_optional_object_fields
 
 if TYPE_CHECKING:
     from models.ex13 import EX13FormSchema
@@ -16,87 +16,99 @@ def to_field_values(form: EX13FormSchema) -> dict[str, Any]:
 
     # Section 1: Foreigner
     f = form.foreigner_details
-    fv["Texto1"] = _s(f.passport)
-    if f.nie:
-        n1, n2, n3 = _split_nie(f.nie)
-        fv["Texto2"], fv["Texto3"], fv["Texto4"] = n1, n2, n3
-    else:
-        fv["Texto2"] = fv["Texto3"] = fv["Texto4"] = ""
-
-    fv["Texto5"] = f.first_surname
-    fv["Texto6"] = _s(f.second_surname)
-    fv["Texto7"] = f.name
-    fv["Texto8"] = f.date_of_birth.strftime("%d")
-    fv["Texto9"] = f.date_of_birth.strftime("%m")
-    fv["Texto10"] = f.date_of_birth.strftime("%Y")
-    fv["Texto11"] = f.birth_place
-    fv["Texto12"] = f.birth_country
-    fv["Texto13"] = f.nationality
-    fv["Texto14"] = _s(f.father_name)
-    fv["Texto15"] = _s(f.mother_name)
-    fv["Texto16"] = f.address
-    fv["Texto17"] = _s(f.address_number)
-    fv["Texto18"] = _s(f.floor_door)
-    fv["Texto19"] = f.city
-    fv["Texto20"] = f.postal_code
-    fv["Texto21"] = f.province
-    fv["Texto22"] = _s(f.mobile_phone)
-    fv["Texto23"] = _s(f.email)
-    fv["Texto24"] = _s(f.legal_guardian_name)
-    fv["Texto25"] = _s(f.legal_guardian_id)
-    fv["Texto26"] = _s(f.legal_guardian_title)
-
-    assign_checkboxes(fv, f.gender.value, {
-        "Casilla de verificación27": "X",
-        "Casilla de verificación28": "H",
-        "Casilla de verificación29": "M",
-    })
-    assign_checkboxes(fv, f.marital_status.value, {
-        "Casilla de verificación30": "S",
-        "Casilla de verificación31": "C",
-        "Casilla de verificación32": "V",
-        "Casilla de verificación33": "D",
-        "Casilla de verificación34": "Sp",
-    })
+    _map_identity_person_block(
+        fv,
+        f,
+        passport_field="Texto1",
+        nie_fields=("Texto2", "Texto3", "Texto4"),
+        date_fields=("Texto8", "Texto9", "Texto10"),
+        text_fields={
+            "first_surname": "Texto5",
+            "second_surname": "Texto6",
+            "name": "Texto7",
+            "birth_place": "Texto11",
+            "birth_country": "Texto12",
+            "nationality": "Texto13",
+            "father_name": "Texto14",
+            "mother_name": "Texto15",
+            "address": "Texto16",
+            "address_number": "Texto17",
+            "floor_door": "Texto18",
+            "city": "Texto19",
+            "postal_code": "Texto20",
+            "province": "Texto21",
+            "mobile_phone": "Texto22",
+            "email": "Texto23",
+            "legal_guardian_name": "Texto24",
+            "legal_guardian_id": "Texto25",
+            "legal_guardian_title": "Texto26",
+        },
+        gender_checkbox_map={
+            "Casilla de verificación27": "X",
+            "Casilla de verificación28": "H",
+            "Casilla de verificación29": "M",
+        },
+        marital_checkbox_map={
+            "Casilla de verificación30": "S",
+            "Casilla de verificación31": "C",
+            "Casilla de verificación32": "V",
+            "Casilla de verificación33": "D",
+            "Casilla de verificación34": "Sp",
+        },
+    )
 
     # Section 2: Filing representative
     r = form.filing_representative
-    fv["Texto42"] = _s(r.name_or_company) if r else ""
-    fv["Texto43"] = _s(r.id_number) if r else ""
-    fv["Texto44"] = _s(r.address) if r else ""
-    fv["Texto45"] = _s(r.address_number) if r else ""
-    fv["Texto46"] = _s(r.floor_door) if r else ""
-    fv["Texto47"] = _s(r.city) if r else ""
-    fv["Texto48"] = _s(r.postal_code) if r else ""
-    fv["Texto49"] = _s(r.province) if r else ""
-    fv["Texto50"] = _s(r.mobile_phone) if r else ""
-    fv["Texto51"] = _s(r.email) if r else ""
-    fv["Texto52"] = _s(r.legal_rep_name) if r else ""
-    fv["Texto53"] = _s(r.legal_rep_id) if r else ""
-    fv["Texto54"] = _s(r.legal_rep_title) if r else ""
+    _map_optional_object_fields(
+        fv,
+        r,
+        text_fields={
+            "name_or_company": "Texto42",
+            "id_number": "Texto43",
+            "address": "Texto44",
+            "address_number": "Texto45",
+            "floor_door": "Texto46",
+            "city": "Texto47",
+            "postal_code": "Texto48",
+            "province": "Texto49",
+            "mobile_phone": "Texto50",
+            "email": "Texto51",
+            "legal_rep_name": "Texto52",
+            "legal_rep_id": "Texto53",
+            "legal_rep_title": "Texto54",
+        },
+    )
 
     # Section 3: Notification
     n = form.notification_address
-    fv["Texto55"] = n.name_or_company
-    fv["Texto56"] = n.id_number
-    fv["Texto57"] = n.address
-    fv["Texto58"] = _s(n.address_number)
-    fv["Texto59"] = _s(n.floor_door)
-    fv["Texto60"] = n.city
-    fv["Texto61"] = n.postal_code
-    fv["Texto62"] = n.province
-    fv["Texto63"] = _s(n.mobile_phone)
-    fv["Texto64"] = _s(n.email)
-    fv["Casilla de verificación35"] = n.consent_electronic_notifications
+    _map_notification_block(
+        fv,
+        n,
+        text_fields={
+            "name_or_company": "Texto55",
+            "id_number": "Texto56",
+            "address": "Texto57",
+            "address_number": "Texto58",
+            "floor_door": "Texto59",
+            "city": "Texto60",
+            "postal_code": "Texto61",
+            "province": "Texto62",
+            "mobile_phone": "Texto63",
+            "email": "Texto64",
+        },
+        consent_field="Casilla de verificación35",
+    )
 
     # Section 4: Grounds + signature + office
     req = form.request_details
-    fv["Casilla de verificación36"] = req.ground == ReturnAuthorizationGroundEnum.RESIDENCE_RENEWAL_OR_EXTENSION_ART_5
-    fv["Casilla de verificación37"] = req.ground == ReturnAuthorizationGroundEnum.STAY_EXTENSION_ART_5
-    fv["Casilla de verificación38"] = req.ground == ReturnAuthorizationGroundEnum.TIE_DUPLICATE_THEFT_LOSS_DAMAGE_ART_5
-    fv["Casilla de verificación39"] = req.ground == ReturnAuthorizationGroundEnum.INITIAL_RESIDENCE_TIE_ISSUANCE_EXCEPTIONAL_REASONS_ART_5
-    fv["Casilla de verificación40"] = req.ground == ReturnAuthorizationGroundEnum.INITIAL_STAY_TIE_ISSUANCE_EXCEPTIONAL_REASONS_ART_5
-    fv["Casilla de verificación41"] = req.ground == ReturnAuthorizationGroundEnum.OTHER
+    _apply_enum_registry(fv, req.ground, {
+        "Casilla de verificación36": ReturnAuthorizationGroundEnum.RESIDENCE_RENEWAL_OR_EXTENSION_ART_5,
+        "Casilla de verificación37": ReturnAuthorizationGroundEnum.STAY_EXTENSION_ART_5,
+        "Casilla de verificación38": ReturnAuthorizationGroundEnum.TIE_DUPLICATE_THEFT_LOSS_DAMAGE_ART_5,
+        "Casilla de verificación39": ReturnAuthorizationGroundEnum.INITIAL_RESIDENCE_TIE_ISSUANCE_EXCEPTIONAL_REASONS_ART_5,
+        "Casilla de verificación40": ReturnAuthorizationGroundEnum.INITIAL_STAY_TIE_ISSUANCE_EXCEPTIONAL_REASONS_ART_5,
+        "Casilla de verificación41": ReturnAuthorizationGroundEnum.OTHER,
+    })
 
     # The form has 3 separate 'Otros' text boxes in extracted widgets.
     fv["Texto74"] = _s(req.other_reason_text_1)
