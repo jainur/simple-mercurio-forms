@@ -16,6 +16,7 @@ from models.ex00 import (
     AuthorizationSubtypeEnum,
     EX00FormSchema,
     EmployerDetails,
+    FamilyMemberDetails,
     ForeignerDetails,
     GenderEnum,
     InstitutionDetails,
@@ -37,7 +38,7 @@ form = EX00FormSchema(
     # ------------------------------------------------------------------
     foreigner_details=ForeignerDetails(
         passport="P1234567",
-        nie=None,
+        nie="X1234567L",
         first_surname="GARCIA",
         second_surname="MARTIN",
         name="LUIS",
@@ -57,9 +58,9 @@ form = EX00FormSchema(
         province="MADRID",
         mobile_phone="612345678",
         email="luis.garcia@ejemplo.es",
-        legal_guardian_name=None,
-        legal_guardian_id=None,
-        legal_guardian_title=None,
+        legal_guardian_name="MARIA DEL CARMEN GARCIA",
+        legal_guardian_id="Y7654321K",
+        legal_guardian_title="TUTORA LEGAL",
     ),
 
     # ------------------------------------------------------------------
@@ -69,13 +70,13 @@ form = EX00FormSchema(
         denomination="UNIVERSIDAD COMPLUTENSE DE MADRID",
         nif="Q2818014H",
         recognition_type=InstitutionRecognitionTypeEnum.RUCT,
-        other_type_name=None,
-        university_affiliation_name=None,
-        other_official_recognition_name=None,
+        other_type_name="CENTRO PRIVADO ACREDITADO",
+        university_affiliation_name="UNIVERSIDAD AUTONOMA DE MADRID",
+        other_official_recognition_name="REGISTRO AUTONOMICO DE FORMACION",
         dir3_code="L01280796",
         address="CALLE ISAAC PERAL",
         address_number="1",
-        floor_door=None,
+        floor_door="1A",
         city="MADRID",
         postal_code="28040",
         province="MADRID",
@@ -89,7 +90,7 @@ form = EX00FormSchema(
     # ------------------------------------------------------------------
     program_details=ProgramDetails(
         denomination="MÁSTER EN INTELIGENCIA ARTIFICIAL",
-        dir3_code=None,
+        dir3_code="EA0040721",
         start_date=date(2026, 9, 15),
         end_date=date(2027, 6, 30),
         modality=StudyModalityEnum.IN_PERSON,
@@ -98,12 +99,32 @@ form = EX00FormSchema(
     # ------------------------------------------------------------------
     # Section 4 – Familiar (not applicable)
     # ------------------------------------------------------------------
-    family_member=None,
+    family_member=FamilyMemberDetails(
+        name="LAURA GARCIA MARTIN",
+        nie_pas="Y1234567P",
+        surnames="GARCIA MARTIN",
+        relationship="HIJA",
+    ),
 
     # ------------------------------------------------------------------
     # Section 5 – Empleador (not applicable for study authorization)
     # ------------------------------------------------------------------
-    employer_details=None,
+    employer_details=EmployerDetails(
+        name_or_company="INNOVA DATA SOLUTIONS SL",
+        dni_nie_pas="B76543210",
+        activity="DESARROLLO DE SOFTWARE",
+        occupation="ANALISTA DE DATOS",
+        address="PASEO DE LA CASTELLANA",
+        address_number="210",
+        floor_door="8B",
+        city="MADRID",
+        postal_code="28046",
+        province="MADRID",
+        mobile_phone="611223344",
+        email="rrhh@innovadata.es",
+        legal_rep_name="MARTA RUIZ GOMEZ",
+        legal_rep_id="12345678A",
+    ),
 
     # ------------------------------------------------------------------
     # Section 6 – Representante para presentación
@@ -119,8 +140,8 @@ form = EX00FormSchema(
         province="MADRID",
         mobile_phone="698765432",
         email="ana.rodriguez@gestoria.es",
-        legal_rep_name=None,
-        legal_rep_id=None,
+        legal_rep_name="LAURA SANCHEZ PEREZ",
+        legal_rep_id="87654321B",
         legal_rep_title="GESTOR ADMINISTRATIVO",
     ),
 

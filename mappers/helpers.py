@@ -126,9 +126,10 @@ def map_notification_block(
     notification: Any,
     *,
     text_fields: Mapping[str, str],
-    consent_field: str,
+    consent_field: str | None = None,
 ) -> None:
     """Map notification fields and consent checkbox for required notification sections."""
     for attr_name, field_name in text_fields.items():
         field_values[field_name] = coerce_str(getattr(notification, attr_name, None))
-    field_values[consent_field] = bool(getattr(notification, "consent_electronic_notifications", False))
+    if consent_field:
+        field_values[consent_field] = bool(getattr(notification, "consent_electronic_notifications", False))
