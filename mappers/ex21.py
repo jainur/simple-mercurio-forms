@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
-from mappers.helpers import assign_checkboxes, coerce_str as _s, split_nie as _split_nie
+from mappers.helpers import apply_enum_registry as _apply_enum_registry, coerce_str as _s, map_identity_person_block as _map_identity_person_block, map_notification_block as _map_notification_block, map_optional_object_fields as _map_optional_object_fields, split_nie as _split_nie
 
 if TYPE_CHECKING:
     from models.ex21 import EX21FormSchema
@@ -21,47 +21,46 @@ def to_field_values(form: EX21FormSchema) -> dict[str, Any]:
     fv: dict[str, Any] = {}
 
     a = form.applicant_details
-    fv["Texto1"] = _s(a.passport)
-    if a.nie:
-        n1, n2, n3 = _split_nie(a.nie)
-        fv["Texto2"], fv["Texto3"], fv["Texto4"] = n1, n2, n3
-    else:
-        fv["Texto2"] = fv["Texto3"] = fv["Texto4"] = ""
-    fv["Texto5"] = a.first_surname
-    fv["Texto6"] = _s(a.second_surname)
-    fv["Texto7"] = a.name
-    fv["Texto8"] = a.birth_place
-    fv["Texto9"] = a.nationality
-    fv["Texto10"] = a.birth_country
-    fv["Texto11"] = _s(a.father_name)
-    fv["Texto12"] = _s(a.mother_name)
-    fv["Texto13"] = a.address
-    fv["Texto14"] = _s(a.address_number)
-    fv["Texto15"] = _s(a.floor_door)
-    fv["Texto16"] = a.postal_code
-    fv["Texto17"] = a.city
-    fv["Texto18"] = _s(a.mobile_phone)
-    fv["Texto19"] = _s(a.email)
-    fv["Texto20"] = _s(a.legal_guardian_name)
-    fv["Texto21"] = a.province
-    fv["Texto22"] = _s(a.legal_guardian_id)
-    fv["Texto23"] = _s(a.legal_guardian_title)
-    fv["Texto76"] = a.date_of_birth.strftime("%d")
-    fv["Texto77"] = a.date_of_birth.strftime("%m")
-    fv["Texto78"] = a.date_of_birth.strftime("%Y")
-
-    assign_checkboxes(fv, a.gender.value, {
-        "Casilla de verificación79": "X",
-        "Casilla de verificación80": "H",
-        "Casilla de verificación81": "M",
-    })
-    assign_checkboxes(fv, a.marital_status.value, {
-        "Casilla de verificación82": "S",
-        "Casilla de verificación83": "C",
-        "Casilla de verificación84": "V",
-        "Casilla de verificación85": "D",
-        "Casilla de verificación86": "Sp",
-    })
+    _map_identity_person_block(
+        fv,
+        a,
+        passport_field="Texto1",
+        nie_fields=("Texto2", "Texto3", "Texto4"),
+        date_fields=("Texto76", "Texto77", "Texto78"),
+        text_fields={
+            "first_surname": "Texto5",
+            "second_surname": "Texto6",
+            "name": "Texto7",
+            "birth_place": "Texto8",
+            "nationality": "Texto9",
+            "birth_country": "Texto10",
+            "father_name": "Texto11",
+            "mother_name": "Texto12",
+            "address": "Texto13",
+            "address_number": "Texto14",
+            "floor_door": "Texto15",
+            "postal_code": "Texto16",
+            "city": "Texto17",
+            "mobile_phone": "Texto18",
+            "email": "Texto19",
+            "legal_guardian_name": "Texto20",
+            "province": "Texto21",
+            "legal_guardian_id": "Texto22",
+            "legal_guardian_title": "Texto23",
+        },
+        gender_checkbox_map={
+            "Casilla de verificación79": "X",
+            "Casilla de verificación80": "H",
+            "Casilla de verificación81": "M",
+        },
+        marital_checkbox_map={
+            "Casilla de verificación82": "S",
+            "Casilla de verificación83": "C",
+            "Casilla de verificación84": "V",
+            "Casilla de verificación85": "D",
+            "Casilla de verificación86": "Sp",
+        },
+    )
 
     b = form.british_national_details
     fv["Texto24"] = _s(b.passport)
@@ -83,32 +82,44 @@ def to_field_values(form: EX21FormSchema) -> dict[str, Any]:
     fv["Texto87"] = b.province
 
     r = form.filing_representative
-    fv["Texto44"] = _s(r.name_or_company) if r else ""
-    fv["Texto46"] = _s(r.address) if r else ""
-    fv["Texto48"] = _s(r.city) if r else ""
-    fv["Texto50"] = _s(r.province) if r else ""
-    fv["Texto52"] = _s(r.email) if r else ""
-    fv["Texto53"] = _s(r.mobile_phone) if r else ""
-    fv["Texto54"] = _s(r.legal_rep_name) if r else ""
-    fv["Texto55"] = _s(r.legal_rep_id) if r else ""
-    fv["Texto56"] = _s(r.legal_rep_title) if r else ""
-    fv["Texto58"] = _s(r.id_number) if r else ""
-    fv["Texto38"] = _s(r.address_number) if r else ""
-    fv["Texto39"] = _s(r.floor_door) if r else ""
-    fv["Texto42"] = _s(r.postal_code) if r else ""
+    _map_optional_object_fields(
+        fv,
+        r,
+        text_fields={
+            "name_or_company": "Texto44",
+            "address": "Texto46",
+            "city": "Texto48",
+            "province": "Texto50",
+            "email": "Texto52",
+            "mobile_phone": "Texto53",
+            "legal_rep_name": "Texto54",
+            "legal_rep_id": "Texto55",
+            "legal_rep_title": "Texto56",
+            "id_number": "Texto58",
+            "address_number": "Texto38",
+            "floor_door": "Texto39",
+            "postal_code": "Texto42",
+        },
+    )
 
     n = form.notification_address
-    fv["Texto45"] = n.name_or_company
-    fv["Texto59"] = n.id_number
-    fv["Texto47"] = n.address
-    fv["Texto40"] = _s(n.address_number)
-    fv["Texto41"] = _s(n.floor_door)
-    fv["Texto49"] = n.city
-    fv["Texto43"] = n.postal_code
-    fv["Texto51"] = n.province
-    fv["Texto60"] = _s(n.email)
-    fv["Texto61"] = _s(n.mobile_phone)
-    fv["Casilla de verificación88"] = n.consent_electronic_notifications
+    _map_notification_block(
+        fv,
+        n,
+        text_fields={
+            "name_or_company": "Texto45",
+            "id_number": "Texto59",
+            "address": "Texto47",
+            "address_number": "Texto40",
+            "floor_door": "Texto41",
+            "city": "Texto49",
+            "postal_code": "Texto43",
+            "province": "Texto51",
+            "email": "Texto60",
+            "mobile_phone": "Texto61",
+        },
+        consent_field="Casilla de verificación88",
+    )
 
     req = form.request_details
     fv["Texto62"] = req.residence_start_day
@@ -124,37 +135,44 @@ def to_field_values(form: EX21FormSchema) -> dict[str, Any]:
     is_renew = req.category == MainRequestCategoryEnum.CARD_RENEWAL
     is_dereg = req.category == MainRequestCategoryEnum.DEREGISTRATION
 
-    fv["Casilla de verificación89"] = is_temp
-    fv["Casilla de verificación90"] = is_temp and req.family_relationship == FamilyRelationshipEnum.SPOUSE
-    fv["Casilla de verificación91"] = is_temp and req.family_relationship == FamilyRelationshipEnum.REGISTERED_PARTNER
-    fv["Casilla de verificación92"] = is_temp and req.family_relationship == FamilyRelationshipEnum.UNREGISTERED_PARTNER
-    fv["Casilla de verificación93"] = is_temp and req.family_relationship == FamilyRelationshipEnum.DESCENDANT_UNDER_21
-    fv["Casilla de verificación94"] = is_temp and req.family_relationship == FamilyRelationshipEnum.DESCENDANT_OVER_21_DEPENDENT_OR_DISABLED
-    fv["Casilla de verificación95"] = is_temp and req.family_relationship == FamilyRelationshipEnum.ASCENDANT_DEPENDENT
-    fv["Casilla de verificación96"] = is_temp and req.family_relationship == FamilyRelationshipEnum.OTHER_FAMILY_MEMBER
-
-    fv["Casilla de verificación97"] = is_perm
-    fv["Casilla de verificación98"] = is_perm and req.permanent_ground == PermanentResidenceGroundEnum.CONTINUOUS_5_YEARS
-    fv["Casilla de verificación99"] = is_perm and req.permanent_ground == PermanentResidenceGroundEnum.FAMILY_OF_BRITISH_WORKER_WITH_PERMANENT_RESIDENCE
-    fv["Casilla de verificación100"] = is_perm and req.permanent_ground == PermanentResidenceGroundEnum.WIDOW_WITH_2_YEARS_RESIDENCE
-    fv["Casilla de verificación101"] = is_perm and req.permanent_ground == PermanentResidenceGroundEnum.WIDOW_WORK_ACCIDENT_OR_PROF_DISEASE
-    fv["Casilla de verificación102"] = is_perm and req.permanent_ground == PermanentResidenceGroundEnum.WIDOW_ORIGINALLY_SPANISH
+    _apply_enum_registry(fv, req.category, {
+        "Casilla de verificación89": MainRequestCategoryEnum.TEMPORARY_RESIDENCE,
+        "Casilla de verificación97": MainRequestCategoryEnum.PERMANENT_RESIDENCE,
+        "Casilla de verificación104": MainRequestCategoryEnum.MODIFICATION,
+        "Casilla de verificación111": MainRequestCategoryEnum.CARD_RENEWAL,
+        "Casilla de verificación114": MainRequestCategoryEnum.DEREGISTRATION,
+    })
+    _apply_enum_registry(fv, req.family_relationship, {
+        "Casilla de verificación90": FamilyRelationshipEnum.SPOUSE,
+        "Casilla de verificación91": FamilyRelationshipEnum.REGISTERED_PARTNER,
+        "Casilla de verificación92": FamilyRelationshipEnum.UNREGISTERED_PARTNER,
+        "Casilla de verificación93": FamilyRelationshipEnum.DESCENDANT_UNDER_21,
+        "Casilla de verificación94": FamilyRelationshipEnum.DESCENDANT_OVER_21_DEPENDENT_OR_DISABLED,
+        "Casilla de verificación95": FamilyRelationshipEnum.ASCENDANT_DEPENDENT,
+        "Casilla de verificación96": FamilyRelationshipEnum.OTHER_FAMILY_MEMBER,
+    }, enabled=is_temp)
+    _apply_enum_registry(fv, req.permanent_ground, {
+        "Casilla de verificación98": PermanentResidenceGroundEnum.CONTINUOUS_5_YEARS,
+        "Casilla de verificación99": PermanentResidenceGroundEnum.FAMILY_OF_BRITISH_WORKER_WITH_PERMANENT_RESIDENCE,
+        "Casilla de verificación100": PermanentResidenceGroundEnum.WIDOW_WITH_2_YEARS_RESIDENCE,
+        "Casilla de verificación101": PermanentResidenceGroundEnum.WIDOW_WORK_ACCIDENT_OR_PROF_DISEASE,
+        "Casilla de verificación102": PermanentResidenceGroundEnum.WIDOW_ORIGINALLY_SPANISH,
+    }, enabled=is_perm)
     fv["Casilla de verificación103"] = (
         (is_perm and req.permanent_ground == PermanentResidenceGroundEnum.OTHER)
         or (is_renew and req.renewal_subtype == RenewalSubtypeEnum.PERMANENT_HOLDER)
     )
-
-    fv["Casilla de verificación104"] = is_mod
-    fv["Casilla de verificación105"] = is_mod and req.modification_ground == ModificationGroundEnum.PERSONAL_DATA
-    fv["Casilla de verificación106"] = is_mod and req.modification_ground == ModificationGroundEnum.ADDRESS
-    fv["Casilla de verificación107"] = is_mod and req.modification_ground == ModificationGroundEnum.IDENTITY_DOCUMENT
-    fv["Casilla de verificación108"] = is_mod and req.modification_ground == ModificationGroundEnum.STATUS_WIDOW
-    fv["Casilla de verificación109"] = is_mod and req.modification_ground == ModificationGroundEnum.STATUS_CHILD_AND_PARENT_UNTIL_END_OF_STUDIES
-    fv["Casilla de verificación110"] = is_mod and req.modification_ground == ModificationGroundEnum.OTHER
-
-    fv["Casilla de verificación111"] = is_renew
-    fv["Casilla de verificación112"] = is_renew and req.renewal_subtype == RenewalSubtypeEnum.TEMPORARY_HOLDER
-    fv["Casilla de verificación114"] = is_dereg
+    _apply_enum_registry(fv, req.modification_ground, {
+        "Casilla de verificación105": ModificationGroundEnum.PERSONAL_DATA,
+        "Casilla de verificación106": ModificationGroundEnum.ADDRESS,
+        "Casilla de verificación107": ModificationGroundEnum.IDENTITY_DOCUMENT,
+        "Casilla de verificación108": ModificationGroundEnum.STATUS_WIDOW,
+        "Casilla de verificación109": ModificationGroundEnum.STATUS_CHILD_AND_PARENT_UNTIL_END_OF_STUDIES,
+        "Casilla de verificación110": ModificationGroundEnum.OTHER,
+    }, enabled=is_mod)
+    _apply_enum_registry(fv, req.renewal_subtype, {
+        "Casilla de verificación112": RenewalSubtypeEnum.TEMPORARY_HOLDER,
+    }, enabled=is_renew)
     fv["Casilla de verificación115"] = req.deregistration_cause_present
     fv["Casilla de verificación116"] = req.truth_statement_accepted
 

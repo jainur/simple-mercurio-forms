@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
-from mappers.helpers import assign_checkboxes, coerce_str as _s, split_nie as _split_nie
+from mappers.helpers import map_identity_person_block as _map_identity_person_block, map_notification_block as _map_notification_block, map_optional_object_fields as _map_optional_object_fields, coerce_str as _s
 
 if TYPE_CHECKING:
     from models.ex25 import EX25FormSchema
@@ -13,85 +13,103 @@ def to_field_values(form: EX25FormSchema) -> dict[str, Any]:
     fv: dict[str, Any] = {}
 
     m = form.minor_details
-    fv["Texto157"] = _s(m.passport)
-    if m.nie:
-        n1, n2, n3 = _split_nie(m.nie)
-        fv["Texto158"], fv["Texto159"], fv["Texto160"] = n1, n2, n3
-    else:
-        fv["Texto158"] = fv["Texto159"] = fv["Texto160"] = ""
-    fv["Texto161"] = m.first_surname
-    fv["Texto162"] = _s(m.second_surname)
-    fv["Texto163"] = m.name
-    fv["Texto164"] = m.date_of_birth.strftime("%d")
-    fv["Texto165"] = m.date_of_birth.strftime("%m")
-    fv["Texto166"] = m.date_of_birth.strftime("%Y")
-    fv["Texto167"] = m.birth_place
-    fv["Texto168"] = m.birth_country
-    fv["Texto169"] = m.nationality
-    fv["Texto170"] = _s(m.father_name)
-    fv["Texto171"] = _s(m.mother_name)
-    fv["Texto172"] = m.address
-    fv["Texto173"] = _s(m.address_number)
-    fv["Texto174"] = _s(m.floor_door)
-    fv["Texto175"] = m.city
-    fv["Texto176"] = _s(m.mobile_phone)
-    fv["Texto177"] = m.postal_code
-    fv["Texto178"] = m.province
-    fv["Texto179"] = _s(m.email)
-    fv["Texto180"] = _s(m.legal_guardian_name)
-    fv["Texto181"] = _s(m.legal_guardian_id)
-    fv["Texto182"] = _s(m.legal_guardian_title)
-    fv["Texto183"] = _s(m.representative_nature)
-    fv["Texto184"] = _s(m.relationship_with_minor)
-
-    assign_checkboxes(fv, m.gender.value, {
-        "Casilla de verificación235": "X",
-        "Casilla de verificación236": "H",
-        "Casilla de verificación237": "M",
-    })
+    _map_identity_person_block(
+        fv,
+        m,
+        passport_field="Texto157",
+        nie_fields=("Texto158", "Texto159", "Texto160"),
+        date_fields=("Texto164", "Texto165", "Texto166"),
+        text_fields={
+            "first_surname": "Texto161",
+            "second_surname": "Texto162",
+            "name": "Texto163",
+            "birth_place": "Texto167",
+            "birth_country": "Texto168",
+            "nationality": "Texto169",
+            "father_name": "Texto170",
+            "mother_name": "Texto171",
+            "address": "Texto172",
+            "address_number": "Texto173",
+            "floor_door": "Texto174",
+            "city": "Texto175",
+            "mobile_phone": "Texto176",
+            "postal_code": "Texto177",
+            "province": "Texto178",
+            "email": "Texto179",
+            "legal_guardian_name": "Texto180",
+            "legal_guardian_id": "Texto181",
+            "legal_guardian_title": "Texto182",
+            "representative_nature": "Texto183",
+            "relationship_with_minor": "Texto184",
+        },
+        gender_checkbox_map={
+            "Casilla de verificación235": "X",
+            "Casilla de verificación236": "H",
+            "Casilla de verificación237": "M",
+        },
+        marital_checkbox_map={},
+    )
 
     g = form.guardian_or_entity_details
-    fv["Texto185"] = g.name_or_company
-    fv["Texto186"] = g.id_number
-    fv["Texto187"] = g.address
-    fv["Texto188"] = _s(g.address_number)
-    fv["Texto189"] = _s(g.floor_door)
-    fv["Texto190"] = g.city
-    fv["Texto191"] = g.postal_code
-    fv["Texto192"] = g.province
-    fv["Texto193"] = _s(g.mobile_phone)
-    fv["Texto194"] = _s(g.email)
-    fv["Texto195"] = _s(g.legal_rep_name)
-    fv["Texto196"] = _s(g.legal_rep_id)
-    fv["Texto197"] = _s(g.legal_rep_title)
+    _map_optional_object_fields(
+        fv,
+        g,
+        text_fields={
+            "name_or_company": "Texto185",
+            "id_number": "Texto186",
+            "address": "Texto187",
+            "address_number": "Texto188",
+            "floor_door": "Texto189",
+            "city": "Texto190",
+            "postal_code": "Texto191",
+            "province": "Texto192",
+            "mobile_phone": "Texto193",
+            "email": "Texto194",
+            "legal_rep_name": "Texto195",
+            "legal_rep_id": "Texto196",
+            "legal_rep_title": "Texto197",
+        },
+    )
 
     r = form.filing_representative
-    fv["Texto198"] = r.name_or_company
-    fv["Texto199"] = r.id_number
-    fv["Texto200"] = r.address
-    fv["Texto201"] = _s(r.address_number)
-    fv["Texto202"] = _s(r.floor_door)
-    fv["Texto203"] = r.city
-    fv["Texto204"] = r.postal_code
-    fv["Texto205"] = r.province
-    fv["Texto206"] = _s(r.mobile_phone)
-    fv["Texto207"] = _s(r.email)
-    fv["Texto208"] = _s(r.legal_rep_name)
-    fv["Texto209"] = _s(r.legal_rep_id)
-    fv["Texto210"] = _s(r.legal_rep_title)
+    _map_optional_object_fields(
+        fv,
+        r,
+        text_fields={
+            "name_or_company": "Texto198",
+            "id_number": "Texto199",
+            "address": "Texto200",
+            "address_number": "Texto201",
+            "floor_door": "Texto202",
+            "city": "Texto203",
+            "postal_code": "Texto204",
+            "province": "Texto205",
+            "mobile_phone": "Texto206",
+            "email": "Texto207",
+            "legal_rep_name": "Texto208",
+            "legal_rep_id": "Texto209",
+            "legal_rep_title": "Texto210",
+        },
+    )
 
     n = form.notification_address
-    fv["Texto211"] = n.name_or_company
-    fv["Texto212"] = n.id_number
-    fv["Texto213"] = n.address
-    fv["Texto214"] = _s(n.address_number)
-    fv["Texto215"] = _s(n.floor_door)
-    fv["Texto216"] = n.city
-    fv["Texto217"] = n.postal_code
-    fv["Texto218"] = n.province
-    fv["Texto219"] = _s(n.mobile_phone)
-    fv["Texto220"] = _s(n.email)
-    fv["Casilla de verificación260"] = n.consent_electronic_notifications
+    _map_notification_block(
+        fv,
+        n,
+        text_fields={
+            "name_or_company": "Texto211",
+            "id_number": "Texto212",
+            "address": "Texto213",
+            "address_number": "Texto214",
+            "floor_door": "Texto215",
+            "city": "Texto216",
+            "postal_code": "Texto217",
+            "province": "Texto218",
+            "mobile_phone": "Texto219",
+            "email": "Texto220",
+        },
+        consent_field="Casilla de verificación260",
+    )
 
     req = form.request_details
     fv["Casilla de verificación238"] = req.temporary_residence_minor_born_in_spain

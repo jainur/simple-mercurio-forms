@@ -11,20 +11,7 @@ from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 from models.common_sections import ApplicantLegalRepresentativeWithChildrenSectionBase, FilingRepresentativeDetailsBase, NotificationAddressBase, OfficeDetailsBase, SignatureFieldsBase
-
-
-class GenderEnum(str, Enum):
-    OTHER = "X"
-    MALE = "H"
-    FEMALE = "M"
-
-
-class MaritalStatusEnum(str, Enum):
-    SINGLE = "S"
-    MARRIED = "C"
-    WIDOWED = "V"
-    DIVORCED = "D"
-    SEPARATED = "Sp"
+from models.shared_enums import GenderEnum, MaritalStatusEnum
 
 
 class ApplicantDetails(ApplicantLegalRepresentativeWithChildrenSectionBase[GenderEnum, MaritalStatusEnum]):

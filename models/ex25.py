@@ -11,12 +11,7 @@ from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 from models.common_sections import FilingRepresentativeDetailsBase, NotificationAddressBase, OfficeDetailsBase, SignatureFieldsBase
-
-
-class GenderEnum(str, Enum):
-    OTHER = "X"
-    MALE = "H"
-    FEMALE = "M"
+from models.shared_enums import GenderEnum
 
 
 class MinorDetails(BaseModel):

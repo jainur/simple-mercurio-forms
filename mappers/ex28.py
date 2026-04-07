@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
-from mappers.helpers import assign_checkboxes, coerce_str as _s, split_nie as _split_nie
+from mappers.helpers import map_identity_person_block as _map_identity_person_block, map_notification_block as _map_notification_block, map_optional_object_fields as _map_optional_object_fields, coerce_str as _s
 
 if TYPE_CHECKING:
     from models.ex28 import EX28FormSchema
@@ -13,49 +13,48 @@ def to_field_values(form: EX28FormSchema) -> dict[str, Any]:
     fv: dict[str, Any] = {}
 
     a = form.applicant_details
-    fv["Texto1"] = _s(a.passport)
-    if a.nie:
-        n1, n2, n3 = _split_nie(a.nie)
-        fv["Texto2"], fv["Texto3"], fv["Texto4"] = n1, n2, n3
-    else:
-        fv["Texto2"] = fv["Texto3"] = fv["Texto4"] = ""
-    fv["Texto5"] = a.first_surname
-    fv["Texto6"] = _s(a.second_surname)
-    fv["Texto7"] = a.name
-    fv["Texto8"] = a.date_of_birth.strftime("%d")
-    fv["Texto9"] = a.date_of_birth.strftime("%m")
-    fv["Texto10"] = a.date_of_birth.strftime("%Y")
-    fv["Texto11"] = a.birth_place
-    fv["Texto12"] = a.birth_country
-    fv["Texto13"] = a.nationality
-    fv["Texto14"] = _s(a.father_name)
-    fv["Texto15"] = _s(a.mother_name)
-    fv["Texto16"] = a.address
-    fv["Texto17"] = _s(a.address_number)
-    fv["Texto18"] = _s(a.floor_door)
-    fv["Texto19"] = a.city
-    fv["Texto20"] = a.postal_code
-    fv["Texto21"] = a.province
-    fv["Texto22"] = _s(a.mobile_phone)
-    fv["Texto23"] = _s(a.email)
-    fv["Texto24"] = _s(a.current_authorization_type)
-    fv["Texto25"] = _s(a.current_authorization_id)
-    fv["Texto26"] = _s(a.legal_representative_name)
-    fv["Texto27"] = _s(a.legal_representative_id)
-    fv["Texto28"] = _s(a.legal_representative_title)
-
-    assign_checkboxes(fv, a.gender.value, {
-        "Casilla de verificación29": "X",
-        "Casilla de verificación30": "H",
-        "Casilla de verificación31": "M",
-    })
-    assign_checkboxes(fv, a.marital_status.value, {
-        "Casilla de verificación32": "S",
-        "Casilla de verificación33": "C",
-        "Casilla de verificación34": "V",
-        "Casilla de verificación35": "D",
-        "Casilla de verificación36": "Sp",
-    })
+    _map_identity_person_block(
+        fv,
+        a,
+        passport_field="Texto1",
+        nie_fields=("Texto2", "Texto3", "Texto4"),
+        date_fields=("Texto8", "Texto9", "Texto10"),
+        text_fields={
+            "first_surname": "Texto5",
+            "second_surname": "Texto6",
+            "name": "Texto7",
+            "birth_place": "Texto11",
+            "birth_country": "Texto12",
+            "nationality": "Texto13",
+            "father_name": "Texto14",
+            "mother_name": "Texto15",
+            "address": "Texto16",
+            "address_number": "Texto17",
+            "floor_door": "Texto18",
+            "city": "Texto19",
+            "postal_code": "Texto20",
+            "province": "Texto21",
+            "mobile_phone": "Texto22",
+            "email": "Texto23",
+            "current_authorization_type": "Texto24",
+            "current_authorization_id": "Texto25",
+            "legal_representative_name": "Texto26",
+            "legal_representative_id": "Texto27",
+            "legal_representative_title": "Texto28",
+        },
+        gender_checkbox_map={
+            "Casilla de verificación29": "X",
+            "Casilla de verificación30": "H",
+            "Casilla de verificación31": "M",
+        },
+        marital_checkbox_map={
+            "Casilla de verificación32": "S",
+            "Casilla de verificación33": "C",
+            "Casilla de verificación34": "V",
+            "Casilla de verificación35": "D",
+            "Casilla de verificación36": "Sp",
+        },
+    )
     fv["Casilla de verificación37"] = a.has_school_age_children_in_spain
     fv["Casilla de verificación38"] = not a.has_school_age_children_in_spain
 
@@ -64,32 +63,44 @@ def to_field_values(form: EX28FormSchema) -> dict[str, Any]:
     fv["Texto55"] = p.filing_date
 
     r = form.filing_representative
-    fv["Texto56"] = _s(r.name_or_company) if r else ""
-    fv["Texto57"] = _s(r.id_number) if r else ""
-    fv["Texto58"] = _s(r.address) if r else ""
-    fv["Texto59"] = _s(r.address_number) if r else ""
-    fv["Texto60"] = _s(r.floor_door) if r else ""
-    fv["Texto61"] = _s(r.city) if r else ""
-    fv["Texto62"] = _s(r.postal_code) if r else ""
-    fv["Texto63"] = _s(r.province) if r else ""
-    fv["Texto64"] = _s(r.mobile_phone) if r else ""
-    fv["Texto65"] = _s(r.email) if r else ""
-    fv["Texto66"] = _s(r.legal_representative_name) if r else ""
-    fv["Texto67"] = _s(r.legal_representative_id) if r else ""
-    fv["Texto68"] = _s(r.legal_representative_title) if r else ""
+    _map_optional_object_fields(
+        fv,
+        r,
+        text_fields={
+            "name_or_company": "Texto56",
+            "id_number": "Texto57",
+            "address": "Texto58",
+            "address_number": "Texto59",
+            "floor_door": "Texto60",
+            "city": "Texto61",
+            "postal_code": "Texto62",
+            "province": "Texto63",
+            "mobile_phone": "Texto64",
+            "email": "Texto65",
+            "legal_representative_name": "Texto66",
+            "legal_representative_id": "Texto67",
+            "legal_representative_title": "Texto68",
+        },
+    )
 
     n = form.notification_address
-    fv["Casilla de verificación39"] = n.consent_electronic_notifications
-    fv["Texto69"] = n.name_or_company
-    fv["Texto70"] = n.id_number
-    fv["Texto71"] = n.address
-    fv["Texto72"] = _s(n.address_number)
-    fv["Texto73"] = _s(n.floor_door)
-    fv["Texto74"] = n.city
-    fv["Texto75"] = n.postal_code
-    fv["Texto76"] = n.province
-    fv["Texto77"] = _s(n.mobile_phone)
-    fv["Texto78"] = _s(n.email)
+    _map_notification_block(
+        fv,
+        n,
+        text_fields={
+            "name_or_company": "Texto69",
+            "id_number": "Texto70",
+            "address": "Texto71",
+            "address_number": "Texto72",
+            "floor_door": "Texto73",
+            "city": "Texto74",
+            "postal_code": "Texto75",
+            "province": "Texto76",
+            "mobile_phone": "Texto77",
+            "email": "Texto78",
+        },
+        consent_field="Casilla de verificación39",
+    )
 
     req = form.request_details
     fv["Casilla de verificación40"] = req.long_term_stay_from_study_or_mobility_or_volunteering
