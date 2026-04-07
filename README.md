@@ -6,6 +6,30 @@ Toolkit for downloading Spanish immigration form PDFs, extracting field definiti
 
 - Framework overview: [docs/framework/project-architecture.md](docs/framework/project-architecture.md)
 - Form filling details: [docs/framework/form-filling.md](docs/framework/form-filling.md)
+- API development blueprint: [docs/framework/api-development.md](docs/framework/api-development.md)
+
+## API Server
+
+Install API dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the server:
+
+```bash
+uvicorn api.main:app --reload
+```
+
+Key endpoints:
+
+- `/docs`
+- `/api/v1/forms`
+- `/api/v1/forms/{formCode}/fields`
+- `/api/v1/forms/{formCode}/validate`
+- `/api/v1/forms/{formCode}/fill`
+- `/api/v1/forms/{formCode}/fill-from-model`
 
 ## Repository Structure
 

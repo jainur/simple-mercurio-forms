@@ -91,6 +91,10 @@ def _load_form_definition(form_code: str) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def load_form_definition(form_code: str) -> dict:
+    return _load_form_definition(form_code)
+
+
 def _find_editable_pdf(form_code: str) -> Path:
     candidates = sorted(EDITABLE_DIR.glob(f"{form_code}*.pdf"))
     if not candidates:
@@ -189,6 +193,10 @@ def _build_assignments(definition: dict, payload: dict) -> tuple[dict[str, Any],
             assignments[field["name"]] = value
 
     return assignments, warnings
+
+
+def build_assignments(definition: dict, payload: dict) -> tuple[dict[str, Any], list[str]]:
+    return _build_assignments(definition, payload)
 
 
 def _set_widget_value(widget: fitz.Widget, value: Any) -> None:
