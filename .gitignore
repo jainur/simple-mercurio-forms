@@ -15,9 +15,9 @@ venv/
 
 # Local databases and temp outputs
 *.db
-!forms.db
+!services/es-immigration-forms/forms.db
 tmp_*.png
-forms/filled/
+services/es-immigration-forms/forms/filled/
 
 # OS/editor files
 .DS_Store
