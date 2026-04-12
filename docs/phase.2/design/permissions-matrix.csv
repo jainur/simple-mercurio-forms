@@ -1,0 +1,21 @@
+permission,assistant,lawyer,client,admin_ops,scope,requires_rationale,requires_state_guard,allowed_states,notes
+case.read,allow,allow,scoped_self,allow,tenant_workspace,false,false,*,Client can access only own case resources
+case.update,allow,limited,none,allow,tenant_workspace,false,true,non_closed,Lawyer limited writes to review-related fields
+intake.submit,assist_proxy,none,allow_scoped,allow,case,false,true,INTAKE_IN_PROGRESS|WAITING_FOR_CLIENT_INFO,Client submits only own intake forms
+document.upload,allow,limited,allow_scoped,allow,case,false,true,DOCUMENT_COLLECTION_IN_PROGRESS|WAITING_FOR_CLIENT_INFO,Uploads from client and assistant channels
+extraction.review,allow,read_only,none,allow,case,false,true,EXTRACTION_REVIEW_PENDING,Read-only for lawyer by default
+extraction.approve,allow,allow,none,allow,case,true,true,EXTRACTION_REVIEW_PENDING,Approval note required
+eligibility.view,allow,allow,limited_summary,allow,case,false,false,*,Client only sees summarized status
+form.edit,allow,limited,none,allow,case,false,true,FORM_FILLING_IN_PROGRESS|FORM_REVIEW_PENDING,State-locked edits
+form.approve,propose,allow,none,allow,case,true,true,FORM_REVIEW_PENDING,Assistant proposal requires lawyer/admin confirmation
+filing.decide,none,allow,none,allow,case,true,true,FORM_APPROVED,Irreversible decision requires explicit rationale
+certificate.upload,allow,allow,none,allow,case,false,true,AWAITING_DIGITAL_CERTIFICATE|FORM_APPROVED,Certificate metadata handled securely
+sync.view,allow,allow,none,allow,tenant_workspace,false,false,*,Visibility for operations and legal staff
+sync.resolve,propose,approve,none,allow,case,true,true,non_closed,Merge strategy may require merged_value
+admin.manage,none,none,none,allow,tenant,false,false,*,Restricted to admin/ops roles
+user.invite,none,none,none,allow,tenant,false,false,*,Admin user provisioning
+user.role_assign,none,none,none,allow,tenant,true,false,*,Second approver policy for privileged roles
+template.manage,none,none,none,allow,tenant_workspace,true,false,*,Template changes tracked via audit
+connector.manage,none,none,none,allow,tenant,true,false,*,Connector config and secret rotation
+audit.read,limited,allow,none,allow,tenant_workspace,false,false,*,Assistants may access scoped operational audit views
+case.withdraw,allow,allow,none,allow,case,true,true,non_closed,Triggers closure workflow and audit event
