@@ -149,6 +149,8 @@ Define the high-level requirements for the full system (not phase-based), aligne
 - DGR-002: Field-level provenance must be retained for extracted or manually corrected data.
 - DGR-003: Audit logs must be immutable for critical legal and submission events.
 - DGR-004: Tenant data segregation must be enforced in all read and write paths.
+DGR-004: Tenant data segregation must be enforced in all read and write paths. All data access and mutation operations must propagate tenant context from authentication through to the repository layer. Row-level filtering and query-time tenant assertions are mandatory. Cross-tenant data joins and shared caches are strictly prohibited. All data stores and caches must be tenant-scoped by design and implementation.
+DGR-005: The system must reconcile GDPR right-to-erasure with immutable audit log requirements. Audit logs reference only pseudonymous case IDs and event metadata, never direct personal identifiers. PII is stored in the canonical case record, which is subject to erasure. When a right-to-erasure request is processed, the canonical record is deleted or nullified, rendering audit log entries non-identifiable. The audit log structure remains intact for legal and operational integrity.
 
 ## 8. Prioritization
 
@@ -197,3 +199,11 @@ Step 2 is complete when all requirements are:
 - CL-01 resolved: Minimum extraction quality baseline for MVP is 90% required-field accuracy on pilot validation sets with mandatory human review prior to filing.
 - CL-02 resolved: Mercurio operates in supervised automation mode for MVP (mandatory lawyer approval and supervised retry).
 - CL-03 resolved: Minimum viable on-premise deployment includes both standard and compact profiles.
+## 4.10 AI Integration Requirements
+
+FR-090: The system must support AI/LLM provider abstraction for all extraction and summarization tasks, with Gemini as the default provider for MVP.
+FR-091: The system must support both direct vision model extraction (for digital PDFs/high-quality scans) and OCR pipeline fallback (for low-quality scans or non-standard formats).
+FR-092: Extraction and GraphRAG queries must be subject to configurable token and request budget limits per tenant and per workflow.
+FR-093: The system must support batch and real-time query modes, with cost control levers exposed at the provider/plugin layer.
+FR-094: All AI-driven extraction and validation outputs must include model version, pipeline provenance, and traceable citations to source evidence or graph snapshot.
+FR-095: The GraphRAG query contract must support a two-stage process: vector similarity search for candidate rules, followed by deterministic graph traversal in Neo4j for authoritative rule chains and citations.

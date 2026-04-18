@@ -65,14 +65,19 @@ For every ExtractedField:
 - confidence_score
 - source_document_id
 - source_locator (page/bbox or text span)
+- The `llm.provider` plugin capability defines the runtime contract for extraction and summarization tasks.
+
 - source_snippet
 - reasoning_summary
 - extracted_at
 - extracted_by_model
+- Extraction runs are versioned by model and pipeline, and provenance is stored per field.
+
 - correction_status
 - corrected_value
 - corrected_by
 - corrected_at
+
 
 ## 4.3 Multi-form readiness model
 Each Case maintains per-form readiness records:
@@ -80,6 +85,7 @@ Each Case maintains per-form readiness records:
 - mapping_coverage_percent
 - unresolved_required_fields
 - unresolved_validation_issues
+
 - approval_status
 - filing_eligibility_status
 
