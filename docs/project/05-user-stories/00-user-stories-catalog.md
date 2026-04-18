@@ -66,6 +66,7 @@ Each story includes:
   - Intake flow captures mandatory fields.
   - Missing required answers are highlighted before submit.
   - Submission creates or updates case intake record.
+  - Failure mode: System provides clear error feedback and allows user to recover from incomplete or invalid intake submissions.
 - Traceability: F02; FR-010, FR-012.
 
 ### US-011
@@ -77,6 +78,7 @@ Each story includes:
   - Client can upload supported file types.
   - Upload success and failure are clearly communicated.
   - Uploaded files are linked to the correct case.
+  - Failure mode: Upload errors (unsupported file, network, virus scan fail) are clearly reported and user can retry or contact support.
 - Traceability: F03; FR-011.
 
 ### US-012
@@ -88,6 +90,7 @@ Each story includes:
   - System proposes document type on upload.
   - System proposes one or more filing tags.
   - Assistant can accept or override suggestions.
+  - Failure mode: If document type/tag suggestion fails, assistant is notified and can proceed with manual entry.
 - Traceability: F03; FR-014, FR-015.
 
 ### US-013
@@ -99,6 +102,7 @@ Each story includes:
   - Extracted fields are shown in structured view.
   - Each field shows confidence score.
   - Assistant edits are saved and tracked.
+  - Failure mode: Extraction or field display errors are surfaced with actionable error messages and user can retry or escalate.
 - Traceability: F04; FR-020, FR-021, FR-021b, FR-024.
 
 ### US-014
@@ -110,6 +114,7 @@ Each story includes:
   - Field view includes source document reference.
   - Field view includes source snippet or location.
   - Field view includes extraction reasoning and confidence.
+  - Failure mode: If provenance cannot be displayed, system notifies user and logs the issue for review.
 - Traceability: F04; FR-021a, DGR-002.
 
 ## Epic E3 — Legal Validation and Procedure Readiness
@@ -123,6 +128,7 @@ Each story includes:
   - System runs legal rule validation from GraphRAG.
   - Validation result indicates ready, missing data, or blocked.
   - Blocking issues include recommended corrective actions.
+  - Failure mode: Validation errors or rule evaluation failures are reported with guidance for resolution or escalation.
 - Traceability: F05, F06; FR-025, FR-026, FR-030, FR-033.
 
 ### US-021
@@ -134,6 +140,7 @@ Each story includes:
   - Checklist lists required documents and conditions.
   - Each requirement links to legal source citation.
   - Checklist updates when new documents are uploaded.
+  - Failure mode: Checklist or legal reference errors are reported and user can retry or request support.
 - Traceability: F05, F06; FR-022, FR-027, FR-028.
 
 ### US-022
@@ -145,6 +152,7 @@ Each story includes:
   - System highlights contradictory data points.
   - Alert links to rule citation and source evidence.
   - Lawyer can mark as accepted risk or return for correction.
+  - Failure mode: Conflict detection or alerting errors are surfaced and user can proceed with manual override or escalate.
 - Traceability: F05, F08; FR-028, FR-040, FR-042.
 
 ### US-023
@@ -156,6 +164,7 @@ Each story includes:
   - Graph loads successfully from nodes and relationships artifacts.
   - Schema compatibility checks pass against expected model.
   - Load results are logged and auditable.
+  - Failure mode: Graph load or schema compatibility errors are reported and system provides rollback or retry options.
 - Traceability: F05; FR-030a, FR-030b.
 
 ### US-024
@@ -167,6 +176,7 @@ Each story includes:
   - Plugin manifest compatibility is validated before activation.
   - Signature verification is mandatory.
   - Activation/deactivation events are auditable.
+  - Failure mode: Plugin activation or signature verification errors are reported and system blocks unsafe activation.
 - Traceability: F19, F05; FR-083, FR-085, FR-086, FR-087.
 
 ## Epic E4 — Form Preparation and Filing
@@ -180,6 +190,7 @@ Each story includes:
   - Form prefill uses latest validated canonical values.
   - Missing required fields are flagged before output.
   - Generated form artifact is available for lawyer review.
+  - Failure mode: Form generation errors (missing data, mapping fail) are reported and user can correct or retry.
 - Traceability: F07; FR-031, FR-032, FR-033.
 
 ### US-031
@@ -191,6 +202,7 @@ Each story includes:
   - EX11 can progress from intake to filing-ready state.
   - Required validations and approvals are enforced.
   - Workflow outcomes are traceable.
+  - Failure mode: If EX11 cannot progress due to system or data errors, user is notified and can retry or escalate.
 - Traceability: F07, F10; FR-034, FR-033.
 
 ### US-032
@@ -202,6 +214,7 @@ Each story includes:
   - Each EX form has defined data mapping and validation profile.
   - Procedure-specific checklist and legal validation are available per form.
   - Unsupported EX form gaps are not allowed in MVP release criteria.
+  - Failure mode: If a form or mapping is missing, system blocks progression and provides clear error message.
 - Traceability: F07, F06, F05; FR-031.
 
 ### US-032a
@@ -213,6 +226,7 @@ Each story includes:
   - Form pack plugin exposes mapping version metadata per form.
   - Core form generation resolves active form-pack capability at runtime.
   - Mapping plugin upgrades are auditable and reversible.
+  - Failure mode: Plugin resolution or upgrade errors are reported and system prevents data loss or corruption.
 - Traceability: F19, F07; FR-082, FR-085, FR-086.
 
 ### US-033
@@ -224,6 +238,7 @@ Each story includes:
   - Filing actions are blocked before lawyer approval.
   - Lawyer can approve, reject, or return with comments.
   - Decision rationale is stored in immutable audit log.
+  - Failure mode: Approval or audit log errors are reported and system blocks filing until resolved.
 - Traceability: F08, F14; FR-040, FR-041, FR-042, DGR-003.
 
 ### US-034
@@ -235,6 +250,7 @@ Each story includes:
   - Filing attempt is initiated from approved case state.
   - Submission status is recorded as success, partial, or failure.
   - Failed attempts support supervised retries.
+  - Failure mode: Submission errors (network, agent, channel) are reported and user can retry or escalate.
 - Traceability: F09a; FR-050, FR-052, FR-053.
 
 ### US-035
@@ -246,6 +262,7 @@ Each story includes:
   - Local agent can be configured by firm admin.
   - Certificate-bound steps execute through local context.
   - Execution events sync back to case timeline.
+  - Failure mode: Local agent or certificate errors are reported and user is guided to resolve or contact support.
 - Traceability: F09b, F10; FR-051, NFR-041.
 
 ### US-036
@@ -257,6 +274,7 @@ Each story includes:
   - Submission dispatch resolves the selected channel capability.
   - Online and offline channels produce standardized outcomes.
   - Channel failures map to workflow-safe retry/blocked states.
+  - Failure mode: Channel plugin or dispatch errors are reported and workflow transitions to a safe retry or blocked state.
 - Traceability: F19, F09a, F09b; FR-084, FR-087, NFR-010.
 
 ## Epic E5 — Tenant, Security, and Governance
