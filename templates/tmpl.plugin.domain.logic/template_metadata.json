@@ -1,0 +1,6 @@
+{
+  "template_id": "tmpl.plugin.domain.logic",
+  "template_version": "1.0.0",
+  "supported_core_versions": ">=1.0.0",
+  "owner": "Platform"
+}

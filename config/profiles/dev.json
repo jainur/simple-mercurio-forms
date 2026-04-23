@@ -1,0 +1,14 @@
+{
+  "profile": "dev",
+  "database": {
+    "engine": "sqlite",
+    "url": "sqlite:///./dev.db"
+  },
+  "storage": {
+    "provider": "local",
+    "path": "./data/dev"
+  },
+  "logging": {
+    "level": "DEBUG"
+  }
+}
