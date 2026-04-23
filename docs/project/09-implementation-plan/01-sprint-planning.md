@@ -12,14 +12,14 @@ Define a realistic sprint plan for a solo build, aligned with approved requireme
 1. Delivery model: solo developer with AI-assisted implementation.
 2. Sprint length: 2 weeks.
 3. Planning horizon: 8 MVP sprints + 1 stabilization sprint.
-4. Plugin-first approach applies from MVP implementation start.
+4. Extensibility is implemented via dependency injection (DI) from MVP implementation start. No plugin runtime or registry is present in the MVP.
 5. PostgreSQL is production DB; SQLite is local-dev profile.
 6. Online and offline filing modes are both required for MVP acceptance.
 
 ## 3. MVP Scope Boundaries for This Plan
 
 Included in this sprint plan:
-- P0 requirements including FR-080 to FR-087 (plugin runtime and capability model).
+- P0 requirements including FR-080 to FR-087 (DI-based extensibility model).
 - All EX forms in MVP scope, with EX11 as first full end-to-end certified path.
 - Mercurio online path and offline PDF path.
 
@@ -34,10 +34,10 @@ Not included in MVP sprint scope:
 - Establish one end-to-end flow quickly (EX11), then harden and expand.
 
 2. Keep core state centralized:
-- Workflow state remains core-owned, with plugin-resolved capabilities.
+- Workflow state remains core-owned, with extensible capabilities injected/configured via DI.
 
-3. Implement plugin framework before broad feature expansion:
-- Avoid retrofitting pluginization after business logic is deeply embedded.
+3. Implement DI-based extensibility before broad feature expansion:
+- Avoid retrofitting extensibility after business logic is deeply embedded.
 
 4. Treat all-EX support as progressive coverage with hard release gate:
 - Mappings/checks can be incrementally delivered, but MVP release requires full EX coverage.

@@ -35,7 +35,7 @@ These standards apply to:
 ## 4.1 Top-level structure
 - `apps/`: user-facing applications (`web`, local agent app if colocated).
 - `services/`: backend domain services and workers.
-- `plugins/`: plugin packages grouped by capability (`domain_logic`, `form_packs`, `rule_packs`, `submission_channels`, `providers`).
+- `plugins/`: (deprecated for MVP) — all extensibility is handled via dependency injection (DI) at startup/configuration time. No runtime plugin loading in MVP.
 - `docs/project/`: authoritative project documentation.
 - `infra/`: deployment manifests, IaC, environment templates.
 - `scripts/`: repeatable automation scripts.
@@ -58,6 +58,9 @@ Disallowed:
 - `integrations -> domain` (integration code must not hold business rules)
 
 ## 4.4 Template families and scaffolding standards
+
+### Extensibility and Alternate Implementations
+All extensibility and alternate implementations (domain logic, extraction, validation, submission, LLM provider, etc.) must be implemented using dependency injection (DI) and configured at startup. No plugin runtime or registry is present in the MVP. The web application and runtime plugin model are deferred until after MVP.
 
 ### 4.4.1 Template families
 The platform maintains predefined template families for common project types:

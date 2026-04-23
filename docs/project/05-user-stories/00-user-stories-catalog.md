@@ -26,46 +26,55 @@ Each story includes:
 - Priority: P0
 - Actor: Assistant
 - Story: As an assistant, I want to create a new immigration case with core client metadata so I can begin the workflow without external tools.
+**MVP Note:** The MVP is delivered as a desktop application (Tauri) only. All extensibility and alternate implementations are handled via dependency injection (DI), not plugins. The web application and runtime plugin model are deferred until after MVP.
 - Business value: Establishes the canonical workspace for all downstream automation.
-- Acceptance criteria:
-  - Assistant can create a case with mandatory identifiers and assigned lawyer.
-  - System validates required metadata before saving.
-  - Case appears in assistant and lawyer queues with initial state.
-- Traceability: F01; FR-001, FR-002, FR-003.
 
-### US-002
+### US-024
+- Priority: P0
+- Actor: Platform Operations
+- Story: As platform operations, I want to configure and inject alternate validation rule-pack implementations at startup so legal rule updates can be delivered without core code changes.
+- Business value: Enables extensible and controlled legal-rule evolution.
+- Acceptance criteria:
+  - DI configuration supports alternate rule-pack implementations.
+  - Configuration changes are auditable.
+  - Only compatible implementations can be injected.
+- Traceability: Extensibility (DI-based), F05; FR-083, FR-085, FR-086, FR-087.
+- Story: As an assistant, I want to assign and reassign case ownership so work can continue when staffing changes.
+
+### US-032a
+- Priority: P0
+- Actor: Platform Operations
+- Story: As platform operations, I want EX mappings delivered as injectable form-pack implementations so forms can evolve without core redeployments.
+- Business value: Decouples form evolution from platform release cadence.
+- Acceptance criteria:
+  - DI configuration supports alternate form-pack implementations.
+  - Mapping upgrades are auditable and reversible.
+  - Only compatible implementations can be injected.
+- Traceability: Extensibility (DI-based), F07; FR-082, FR-085, FR-086.
+- Actor: Lawyer
+
+### US-036
 - Priority: P0
 - Actor: Assistant
-- Story: As an assistant, I want to assign and reassign case ownership so work can continue when staffing changes.
-- Business value: Prevents workflow stalls due to personnel changes.
+- Story: As an assistant, I want submission mode behavior (online Mercurio or offline PDF) to be injectable/configurable so future filing channels can be added without workflow redesign.
+- Business value: Future-proofs filing execution while preserving current operations.
 - Acceptance criteria:
-  - Assistant with proper permission can assign case owner.
-  - Reassignment is logged with actor and timestamp.
-  - New owner receives notification in task queue.
-- Traceability: F01, F14; FR-003, FR-004, FR-041.
+  - Submission dispatch resolves the selected channel implementation via DI.
+  - Online and offline channels produce standardized outcomes.
+  - Channel failures map to workflow-safe retry/blocked states.
+- Traceability: Extensibility (DI-based), F09a, F09b; FR-084, FR-087, NFR-010.
 
-### US-003
+
+### US-044
 - Priority: P0
-- Actor: Lawyer
-- Story: As a lawyer, I want a clear case stage and blocker view so I can quickly assess readiness and risk.
-- Business value: Reduces review time and prevents premature filing.
+- Actor: Platform Admin
+- Story: As a platform admin, I want DI configuration governance (inject, swap, upgrade) with permission checks so extensibility remains secure and controlled.
+- Business value: Prevents unsafe configuration changes from impacting case integrity.
 - Acceptance criteria:
-  - Current case stage is visible and consistent for all users.
-  - Blocking reasons are visible with actionable next steps.
-  - Stage changes are auditable.
-- Traceability: F01, F10, F14; FR-002, FR-004, NFR-022.
-
-## Epic E2 — Intake and Document Intelligence
-
-### US-010
-- Priority: P0
-- Actor: Client
-- Story: As a client, I want guided intake questions so I can provide correct information with minimal legal jargon.
-- Business value: Improves data quality at source.
-- Acceptance criteria:
-  - Intake flow captures mandatory fields.
-  - Missing required answers are highlighted before submit.
-  - Submission creates or updates case intake record.
+  - Only authorized actors can perform DI configuration changes.
+  - Configuration changes require compatibility checks.
+  - Every configuration change is captured in audit trail.
+- Traceability: Extensibility (DI-based); FR-080, FR-085, FR-086, DGR-003.
   - Failure mode: System provides clear error feedback and allows user to recover from incomplete or invalid intake submissions.
 - Traceability: F02; FR-010, FR-012.
 

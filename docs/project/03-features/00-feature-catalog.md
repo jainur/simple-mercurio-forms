@@ -27,6 +27,7 @@ Define product features as the bridge between high-level requirements and detail
 | F13 | Internationalisation (i18n) | P0 | English, Spanish, Catalan |
 | F14 | Audit Log and Traceability | P0 | Legal-grade action traceability |
 | F19 | Plugin Runtime and Capability Registry | P0 | Plugin-first extensibility for domain logic, forms, rules, and submission channels |
+
 | F15 | Notifications and Alerts | P1 | Email + in-app real-time notifications |
 | F16 | PMS Integration Framework | P1 | Post-MVP integration foundation |
 | F17 | Knowledge Graph Authoring for Legal Experts | P1 | Product feature for legal experts to maintain graph |
@@ -248,21 +249,28 @@ Enable controlled, auditable extensibility using plugins for domain logic, form 
 Platform operations, Firm Admin (configuration scope), Assistant/Lawyer (indirect behavior consumers).
 
 ### In scope
-- Plugin manifest parsing and compatibility checks.
-- Capability registry for domain.logic, form.pack, validation.rule_pack, submission.channel, and provider adapters.
-- Signed plugin verification and permission-scoped activation.
-- Plugin lifecycle events: install, enable, disable, upgrade.
-- Plugin health and telemetry exposure.
 
 ### Acceptance indicators
-- Core platform can execute domain logic via plugin contract without code changes.
-- Form mappings are loaded from a form-pack plugin.
-- Validation executes through rule-pack plugin contracts with citation outputs.
-- Submission mode dispatch resolves via submission channel plugin contract.
-- Plugin lifecycle actions are auditable and safe rollback/disable is supported.
 
 ### Maps to requirements
 FR-080, FR-081, FR-082, FR-083, FR-084, FR-085, FR-086, FR-087.
+
+## Extensibility and Alternate Implementations (DI-based)
+
+### Objective
+Allow alternate implementations for domain logic, extraction, validation, submission, and LLM provider to be injected/configured at startup using dependency injection (DI), not runtime plugins.
+
+### In scope
+- DI container and configuration
+- Service interface definitions for extensible components
+- Alternate implementations selected at build/startup time
+
+### Acceptance indicators
+- Core services can be swapped via DI without code changes
+- No runtime plugin loading or registry
+
+### Maps to requirements
+FR-080 to FR-087 (DI-based), NFR-005, NFR-022, DGR-003
 
 ## F09b — Local Agent and FNMT Certificate Bridge (P0)
 

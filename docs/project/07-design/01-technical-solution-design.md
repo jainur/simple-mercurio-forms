@@ -15,7 +15,7 @@ Define feature-level technical design aligned to the approved architecture, with
 4. Human approval is a hard technical gate, not a UI convention.
 5. Legal validation outputs must be citation-backed and explainable.
 6. Same domain model and APIs for SaaS and on-prem.
-7. Extensible capabilities are plugin-resolved while workflow state remains core-owned.
+7. Extensible capabilities are injected/configured via dependency injection (DI) at startup; no plugin runtime or registry is present in the MVP.
 
 ## 3. System Context and Boundaries
 
@@ -26,7 +26,7 @@ Define feature-level technical design aligned to the approved architecture, with
 - Workflow engine (Temporal): durable process execution.
 - Data stores: PostgreSQL (production), SQLite (local dev via ORM), Neo4j, Redis, storage backend.
 - Local agent (Tauri): FNMT-bound operations for Mercurio.
-- Plugin runtime: capability registry and signed plugin lifecycle manager.
+- Extensibility: All alternate implementations (domain logic, extraction, validation, submission, LLM provider, etc.) are injected/configured at startup using DI. No plugin runtime or registry is present in the MVP.
 
 ## 3.2 External dependencies
 - Email delivery provider.
@@ -275,34 +275,14 @@ Design details:
 - Event payload includes actor, tenant, workflow_state_before, workflow_state_after.
 - Submission and approval events tagged as LEGAL_CRITICAL.
 
-## 6.11 F19 Plugin Runtime and Capability Registry
-APIs:
-- POST /api/v1/plugins/install
-- POST /api/v1/plugins/{plugin_id}/enable
-- POST /api/v1/plugins/{plugin_id}/disable
-- GET /api/v1/plugins
-- GET /api/v1/plugins/{plugin_id}/health
+
+## 6.11 Extensibility and Alternate Implementations (DI-based)
 
 Design details:
-- Plugins are loaded from signed manifests and validated for compatibility.
-- Capability resolver maps capability key + contract version to active plugin implementation.
-- Required MVP capabilities:
-  - domain.logic
-  - form.pack
-  - validation.rule_pack
-  - submission.channel
-  - llm.provider
-- Plugin lifecycle actions emit immutable audit events.
-
-Plugin manifest (minimum):
-- plugin_id
-- plugin_version
-- capabilities
-- api_contract_version
-- core_compatibility
-- config_schema
-- permissions_required
-- signature_metadata
+- All extensibility and alternate implementations (domain logic, extraction, validation, submission, LLM provider, etc.) are injected/configured at startup using dependency injection (DI).
+- No plugin runtime, registry, or manifest system is present in the MVP.
+- Alternate implementations are selected via DI container configuration at startup/build time.
+- Extensibility actions (configuration changes) are auditable.
 
 ## 7. Data Store Design
 

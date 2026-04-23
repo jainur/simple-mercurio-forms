@@ -47,17 +47,17 @@ Evidence:
 - Authorization test report
 - Audit event sample outputs
 
-## Sprint 2 — Plugin Runtime v1
+## Sprint 2 — Extensibility (DI-based) v1
 Complete when:
-1. Plugin install/enable/disable/list/health APIs are operational.
-2. Manifest validation, signature verification, and compatibility checks are enforced.
-3. Capability resolver supports required MVP capabilities.
-4. Plugin lifecycle actions are auditable.
+1. DI container and configuration for extensible services is operational.
+2. Alternate implementations can be injected/configured at startup.
+3. All required MVP extensibility points (domain logic, extraction, validation, submission, LLM provider) are injectable.
+4. Extensibility actions are auditable via configuration change logs.
 
 Evidence:
-- Plugin contract test report
-- Negative tests for invalid plugin activation
-- Audit log records for lifecycle actions
+- DI configuration test report
+- Negative tests for invalid DI configuration
+- Audit log records for configuration changes
 
 ## Sprint 3 — Intake, Documents, Extraction
 Complete when:

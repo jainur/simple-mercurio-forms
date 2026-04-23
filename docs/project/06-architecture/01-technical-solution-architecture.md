@@ -31,8 +31,8 @@ Hybrid cloud-local workflow architecture with five execution planes:
 4. Execution plane (local bridge)
 - Local agent on firm infrastructure for FNMT certificate-bound Mercurio actions.
 
-5. Extensibility plane
-- Plugin runtime and capability registry for domain logic, form packs, rule packs, submission channels, and provider adapters.
+
+// Extensibility plane removed: All extensibility and alternate implementations are handled via dependency injection (DI) at startup/configuration time. No plugin runtime or registry is present in the MVP. The MVP is delivered as a desktop application (Tauri) only; the web application and runtime plugin model are deferred until after MVP.
 
 This split keeps legal filing actions close to certificate context while centralizing workflow state and business logic.
 

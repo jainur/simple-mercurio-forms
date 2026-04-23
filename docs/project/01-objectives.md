@@ -54,7 +54,9 @@ Use immigration as the proving vertical for a broader process-automation platfor
 
 ## 3. MVP Goal Statement
 
-For MVP, abogados-cowork must allow a law firm assistant to take a new client from zero to a lawyer-approved and filed EX11 procedure with AI-assisted extraction, validation, and form automation, while meeting GDPR expectations and supporting Spanish/Catalan interfaces.
+For MVP, abogados-cowork will deliver a desktop application (Tauri) that allows a law firm assistant to take a new client from zero to a lawyer-approved and filed EX11 procedure with AI-assisted extraction, validation, and form automation, while meeting GDPR expectations and supporting Spanish/Catalan interfaces.
+
+The web application (Next.js) is out of scope for MVP and will be revisited after MVP validation. All extensibility and alternate implementations will use dependency injection (DI) rather than a plugin architecture.
 
 ## 4. KPI Candidates (to baseline and finalize in planning)
 
