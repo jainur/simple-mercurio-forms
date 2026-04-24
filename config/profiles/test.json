@@ -1,0 +1,13 @@
+{
+  "profile": "test",
+  "database": {
+    "engine": "sqlite",
+    "url": "sqlite:///:memory:"
+  },
+  "storage": {
+    "provider": "memory"
+  },
+  "logging": {
+    "level": "INFO"
+  }
+}

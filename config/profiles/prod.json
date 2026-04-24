@@ -1,0 +1,14 @@
+{
+  "profile": "prod",
+  "database": {
+    "engine": "postgres",
+    "url": "${DATABASE_URL}"
+  },
+  "storage": {
+    "provider": "s3",
+    "bucket": "${S3_BUCKET}"
+  },
+  "logging": {
+    "level": "WARN"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "profile": "onprem",
+  "database": {
+    "engine": "postgres",
+    "url": "${DATABASE_URL}"
+  },
+  "storage": {
+    "provider": "local",
+    "path": "/var/lib/abogados/data"
+  },
+  "logging": {
+    "level": "INFO"
+  }
+}

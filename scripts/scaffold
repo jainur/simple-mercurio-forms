@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -e
+
+if [ "$#" -lt 6 ]; then
+  echo "Usage: ./scripts/scaffold --type <template_family> --name <project_name> --profile <dev|prod|onprem>"
+  exit 1
+fi
+
+TEMPLATE_FAMILY=""
+PROJECT_NAME=""
+PROFILE=""
+
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --type) TEMPLATE_FAMILY="$2"; shift ;;
+        --name) PROJECT_NAME="$2"; shift ;;
+        --profile) PROFILE="$2"; shift ;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
+
+if [ ! -d "templates/$TEMPLATE_FAMILY" ]; then
+    echo "Error: Template family $TEMPLATE_FAMILY does not exist."
+    exit 1
+fi
+
+echo "Scaffolding project $PROJECT_NAME from template $TEMPLATE_FAMILY with profile $PROFILE..."
+
+# Scaffold standard directory layout based on type
+if [[ "$TEMPLATE_FAMILY" == *"tmpl.web"* ]]; then
+  TARGET_DIR="apps/$PROJECT_NAME"
+elif [[ "$TEMPLATE_FAMILY" == *"tmpl.api"* || "$TEMPLATE_FAMILY" == *"tmpl.worker"* || "$TEMPLATE_FAMILY" == *"tmpl.agent"* ]]; then
+  TARGET_DIR="services/$PROJECT_NAME"
+elif [[ "$TEMPLATE_FAMILY" == *"tmpl.plugin"* ]]; then
+  TARGET_DIR="plugins/$PROJECT_NAME"
+elif [[ "$TEMPLATE_FAMILY" == *"tmpl.integration"* ]]; then
+  TARGET_DIR="services/integrations/$PROJECT_NAME"
+elif [[ "$TEMPLATE_FAMILY" == *"tmpl.infra"* ]]; then
+  TARGET_DIR="infra/$PROJECT_NAME"
+elif [[ "$TEMPLATE_FAMILY" == *"tmpl.docs"* ]]; then
+  TARGET_DIR="docs/project/changes/$PROJECT_NAME"
+else
+  TARGET_DIR="$PROJECT_NAME"
+fi
+
+mkdir -p "$TARGET_DIR"
+
+# Copy template contents
+cp -r "templates/$TEMPLATE_FAMILY/"* "$TARGET_DIR/"
+
+# Inject profile into the metadata
+if [ -f "$TARGET_DIR/template_metadata.json" ]; then
+  # Simple append since jq might not be available, or we just write a config file
+  echo "{\"profile\": \"$PROFILE\"}" > "$TARGET_DIR/profile.json"
+fi
+
+echo "Project $PROJECT_NAME scaffolded successfully in $TARGET_DIR!"
